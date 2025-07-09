@@ -5,7 +5,10 @@
     "currentCompany": "CIBC",
     "location": "Toronto, Ontario",
     "email": "bertmill19@gmail.com",
-    "linkedin": "https://www.linkedin.com/in/bertomill/"
+    "linkedin": "https://www.linkedin.com/in/bertomill/",
+    "youtube": "https://www.youtube.com/@bertomill1",
+    "newsletter": "https://medium.com/@bertomill",
+    "twitter": "https://x.com/bertomill1"
   },
   "education": [
     {
@@ -313,13 +316,97 @@
     }
   ],
   "strengths": [
-    "AI Strategy & Implementation - Led CIBC's transformation from #41 to top 20 globally in AI maturity through comprehensive strategic planning and execution",
-    "Customer-Facing Consulting - 4+ years of direct client interaction across finance, healthcare, and technology sectors, with proven ability to understand complex needs and deliver solutions",
-    "Process Optimization & Scaling - Scaled Scelta from 5 to 20 customers through innovative template-based solutions, reducing implementation time from weeks to days",
-    "Cross-Functional Collaboration - Successfully worked with C-level executives, product teams, engineers, and diverse stakeholders across multiple industries",
-    "Data-Driven Decision Making - Consistently analyzed complex datasets to provide actionable recommendations, from AI maturity indices to financial planning models",
-    "Technology Resourcefulness - Recognized as 'most resourceful person' at Scelta for quickly identifying and implementing optimal tools and AI solutions for business challenges",
-    "Rapid Domain Learning - Successfully adapted to healthcare (Sick Kids), construction (Scelta), and banking (CIBC) industries, quickly developing expertise in complex domains"
+    {
+      "title": "AI Strategy & Implementation",
+      "summary": "Led CIBC's transformation from #41 to top 20 globally in AI maturity through comprehensive strategic planning and execution",
+      "details": "Researched and analyzed every report and data point from the AI maturity index, visualizing data in multiple ways to identify improvement opportunities. Created a high-level view of low-hanging fruit opportunities and verified with stakeholders including the CTO. Built a comprehensive roadmap with expected scoring outcomes and executed through weekly stand-ups with the team. Continuously adapted the plan as the index evolved, balancing bank strategy with score optimization requirements.",
+      "metrics": [
+        "Moved CIBC from #41 to top 20 globally in AI maturity rankings",
+        "Executed 21 strategic initiatives (started with 10, expanded due to early momentum)",
+        "Stock price increased from ~$80 to ~$90 within a week of index release",
+        "Featured in CEO annual report and quarterly earnings calls"
+      ],
+      "technologies": ["Tableau", "Python", "Microsoft Azure", "PowerPoint"],
+      "impact": "Transformed the bank's culture around AI innovation - shifted from discouraging AI use to celebrating AI achievements. Encouraged employees to evangelize AI innovation and provided clarity on the bank's AI strategy direction."
+    },
+    {
+      "title": "Customer-Facing Consulting",
+      "summary": "4+ years of direct client interaction across finance, healthcare, and technology sectors, with proven ability to understand complex needs and deliver solutions",
+      "details": "Conducted initial hour-long discovery meetings with clients, recording sessions and using AI to extract key process steps. Built quick prototypes within a week to demonstrate proof of concept, then returned to train entire teams on new tools. Deployed mobile apps directly to construction workers on-site, providing hands-on training and support.",
+      "metrics": [
+        "Transformed 5 companies from pen-and-paper to digital automated invoices",
+        "Automated project management processes, saving business owners 10 hours per weekend",
+        "Scaled from 5 to 20 customers through effective client engagement",
+        "Achieved company-wide adoption (3-4 people to 50+ people per company)"
+      ],
+      "technologies": ["Google AppSheet", "Google Scripts", "Google Firebase", "AI transcription tools"],
+      "impact": "Distinguished approach of meeting clients where they are - literally showing up on construction sites with boots on to provide personal, hands-on support while delivering high-tech solutions."
+    },
+    {
+      "title": "Process Optimization & Scaling",
+      "summary": "Scaled Scelta from 5 to 20 customers through innovative template-based solutions, reducing implementation time from weeks to days",
+      "details": "Identified inefficiency in building bespoke JavaScript apps for each client (taking 3-4 engineers weeks per project). Introduced Google AppSheet as a low-code solution that could be templated and deployed in 1-few days. Created standardized templates that could be quickly customized for each client while maintaining security through reputable platform partnership.",
+      "metrics": [
+        "Scaled from 5 to 20 customers (300% growth)",
+        "Reduced implementation time from weeks to days",
+        "Increased adoption from 3-4 people per company to 50+ people",
+        "Enabled much faster client onboarding and company growth"
+      ],
+      "technologies": ["Google AppSheet", "Firebase", "Google BigQuery", "JavaScript"],
+      "impact": "Fundamentally changed the business model from custom development to scalable template-based solutions, enabling rapid growth and competitive advantage through faster deployment capabilities."
+    },
+    {
+      "title": "Cross-Functional Collaboration",
+      "summary": "Successfully worked with C-level executives, product teams, engineers, and diverse stakeholders across multiple industries",
+      "details": "Approach focuses on understanding what success looks like from each stakeholder's perspective, then creating solutions that deliver success for everyone. Facilitate alignment by bringing diverse groups together to validate approaches: 'Does this make sense? Does this sound like a good thing to do?'",
+      "metrics": [
+        "Led AI index project involving CTO, product teams, and engineering",
+        "Moved CIBC from 41st to top 20 in AI maturity through cross-functional execution",
+        "Maintained bi-weekly progress meetings with CTO for almost 2 years",
+        "Successfully aligned diverse priorities across multiple business units"
+      ],
+      "technologies": ["Tableau", "Microsoft Azure", "Python", "PowerPoint"],
+      "impact": "Recognized for bringing enthusiasm and energy to teams, inspiring participation and contribution. Valued for attention to detail and becoming the leading expert in subject areas, which builds trust across stakeholder groups."
+    },
+    {
+      "title": "Data-Driven Decision Making",
+      "summary": "Consistently analyzed complex datasets to provide actionable recommendations, from AI maturity indices to financial planning models",
+      "details": "Process involves spending extensive time with data - reading through all reports, analyzing data from multiple angles, going line by line to understand hidden discrepancies and adding context. Focus on identifying the biggest story emerging from the data and presenting it in an understandable way to executive teams.",
+      "metrics": [
+        "Analyzed thousands of data points for AI maturity transformation",
+        "Provided data-driven recommendations to executive teams at major companies like BCG",
+        "Maintained bi-weekly CTO progress meetings for almost 2 years",
+        "Created executive dashboards showing data changes over time"
+      ],
+      "technologies": ["Tableau", "Python", "Microsoft Azure", "Executive dashboard tools"],
+      "impact": "Data-driven recommendations are critical for executive teams who want to see numbers changing over time. Consistent executive reporting builds trust and enables informed decision-making at the highest levels."
+    },
+    {
+      "title": "Technology Resourcefulness",
+      "summary": "Recognized as 'most resourceful person' at Scelta for quickly identifying and implementing optimal tools and AI solutions for business challenges",
+      "details": "Stay current by reading leading AI newsletters daily, writing own blogs (100+ blogs, 10,000+ readers), and attending 3-4 AI events weekly. Participate in hackathons and maintain deep understanding of emerging technologies. Created MarketStep.app for market research and leverage AI tools like Perplexity, Claude, ChatGPT, and Google Deep Research.",
+      "metrics": [
+        "100+ published blogs with 10,000+ readers",
+        "Attend 3-4 AI events weekly",
+        "Recognized as 'most resourceful person' by management",
+        "Reduced implementation time from weeks to days through optimal tool selection"
+      ],
+      "technologies": ["Google AppSheet", "Perplexity", "Claude", "ChatGPT", "Google Deep Research", "MarketStep.app"],
+      "impact": "Ability to understand leverage points and select optimal tools creates competitive advantage for organizations. Saves teams significant time and enables more innovative solutions to complex business challenges."
+    },
+    {
+      "title": "Rapid Domain Learning",
+      "summary": "Successfully adapted to healthcare (Sick Kids), construction (Scelta), and banking (CIBC) industries, quickly developing expertise in complex domains",
+      "details": "Methodology involves conducting deep hour-long interviews with users, recording and re-listening to capture nuances, then extensively reading and ingesting domain information. Use process mapping tools to understand workflows and collaborate with teams to identify improvement opportunities.",
+      "metrics": [
+        "Successfully delivered value across healthcare, construction, and banking industries",
+        "Identified physician burnout solution (Dragon Notes) that was implemented at Sick Kids",
+        "Recommended digital pathology solution for tissue slide management",
+        "Quickly understood EHR processes and identified AI implementation opportunities"
+      ],
+      "technologies": ["Process mapping tools", "Figma", "Miro", "Microsoft Dragon Notes", "Digital pathology systems"],
+      "impact": "Rapid domain expertise enables immediate value contribution across diverse industries. Ability to quickly understand complex processes and identify technology solutions that address real pain points makes consulting approach highly effective."
+    }
   ],
   "growthAreas": [
     "Technical Database Expertise - Currently developing deeper understanding of database systems and technical infrastructure to complement strategic consulting skills",

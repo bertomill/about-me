@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.56.0",
+    "@google/generative-ai": "^0.24.1",
     "@openai/agents": "^0.0.10",
     "@supabase/supabase-js": "^2.50.3",
     "@tailwindcss/typography": "^0.5.16",

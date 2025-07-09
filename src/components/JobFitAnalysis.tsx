@@ -28,7 +28,7 @@ export default function JobFitAnalysis() {
     {
       requirement: "3+ years of experience in a SaaS Software environment",
       category: "experience",
-      matchLevel: "perfect",
+      matchLevel: "strong",
       robertsExperience: "3+ years combined: 2+ years at CIBC with enterprise software solutions and 1+ year at Scelta delivering software products to construction companies",
       evidence: ["Digital transformation projects at CIBC", "Construction technology platform delivery at Scelta", "Cloud-based solution implementations", "Software vendor management"]
     },
@@ -73,7 +73,7 @@ export default function JobFitAnalysis() {
     {
       requirement: "Experience collaborating across Sales, Product, Customer Success, Development teams",
       category: "collaboration",
-      matchLevel: "perfect",
+      matchLevel: "strong",
       robertsExperience: "Extensive cross-functional collaboration in enterprise environment and construction technology platform delivery",
       evidence: ["Worked with IT, Operations, Sales teams at CIBC", "Construction technology platform delivery at Scelta", "Product development collaboration", "Stakeholder alignment across departments"]
     },
@@ -146,7 +146,7 @@ export default function JobFitAnalysis() {
     total: jobRequirements.length
   };
 
-  const matchPercentage = 95; // Mid-90s match reflecting exceptional alignment with Glia requirements
+  const matchPercentage = 92; // High 90s match reflecting exceptional alignment with Glia requirements
 
   return (
     <div className="space-y-6">

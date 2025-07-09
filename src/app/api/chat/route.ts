@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { supabase } from '@/lib/supabase';
+import { Anthropic } from '@anthropic-ai/sdk';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Define proper types for database entities to avoid any types
 // These interfaces match the structure of data from our Supabase database
@@ -49,76 +50,74 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Function to get candidate context from Supabase
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
+
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || '');
+
+// Function to get candidate context from JSON file
 async function getCandidateContext() {
   try {
-    // Get all candidate data from Supabase
-    const [personalResponse, educationResponse, experienceResponse, strengthsResponse, storiesResponse] = await Promise.all([
-      supabase.from('personal_info').select('*').single(),
-      supabase.from('education').select('*'),
-      supabase.from('experience').select('*'),
-      supabase.from('strengths').select('*'),
-      supabase.from('key_stories').select('*')
-    ]);
+    // Import candidate data from JSON file
+    const candidateData = await import('@/data/candidate-info.json');
+    
+    const personal = candidateData.personal;
+    const education = candidateData.education || [];
+    const experience = candidateData.experience || [];
+    const strengths = candidateData.strengths || [];
+    const stories = candidateData.keyStories || [];
 
-    const personal = personalResponse.data;
-    const education = educationResponse.data || [];
-    const experience = experienceResponse.data || [];
-    const strengths = strengthsResponse.data || [];
-    const stories = storiesResponse.data || [];
+    // Format the context for AI models (optimized for better performance)
+    let context = `You are an AI assistant helping interviewers learn about Robert Mill. Here's key information about him:
 
-    // Format the context for OpenAI
-    let context = `You are an AI assistant helping interviewers learn about Robert Mill. Here's comprehensive information about him:
-
-PERSONAL INFORMATION:
+PERSONAL INFO:
 - Name: ${personal?.name}
-- Current Role: ${personal?.role} at ${personal?.company}
+- Role: ${personal?.currentRole} at ${personal?.currentCompany}
 - Location: ${personal?.location}
-- Email: ${personal?.email}
-- LinkedIn: ${personal?.linkedin}
+- Links: LinkedIn, YouTube, Newsletter, Twitter
 
 EDUCATION:`;
 
-    education.forEach((edu: DatabaseEducation) => {
+    education.forEach((edu: any) => {
       context += `
-- ${edu.degree} from ${edu.institution} (${edu.graduation_year})
-  Achievements: ${edu.achievements?.join(', ')}
-  Relevant Coursework: ${edu.relevant_coursework?.join(', ')}
-  Why Chosen: ${edu.why_chosen}`;
+- ${edu.degree} from ${edu.institution} (${edu.graduationYear})
+  Key achievements: ${edu.achievements?.slice(0, 2).join(', ')}`;
     });
 
     context += `
 
 WORK EXPERIENCE:`;
 
-    experience.forEach((exp: DatabaseExperience) => {
+    experience.forEach((exp: any) => {
       context += `
-- ${exp.position} at ${exp.company} (${exp.start_date} - ${exp.end_date})
-  Location: ${exp.location}
-  How Found Job: ${exp.how_found_job}
-  What Hired To Do: ${exp.what_hired_to_do}
-  Manager's Description: ${exp.manager_description}
-  Biggest Win: ${exp.biggest_win}
-  Toughest Challenge: ${exp.toughest_challenge}
-  Why Made Move: ${exp.why_made_move}
-  What Learned: ${exp.what_learned}
-  Key Accomplishments: ${exp.accomplishments?.join(', ')}
-  Skills: ${exp.skills?.join(', ')}
-  Technologies: ${exp.technologies?.join(', ')}`;
+- ${exp.position} at ${exp.company} (${exp.startDate} - ${exp.endDate})
+  Biggest Win: ${exp.magicQuestions?.biggestWin}
+  Key Skills: ${exp.skills?.slice(0, 3).join(', ')}
+  Technologies: ${exp.technologies?.slice(0, 3).join(', ')}`;
     });
 
     context += `
 
 CORE STRENGTHS:`;
-    strengths.forEach((strength: DatabaseStrength) => {
-      context += `
-- ${strength.strength}`;
+    strengths.forEach((strength: any) => {
+      if (typeof strength === 'string') {
+        context += `
+- ${strength}`;
+      } else {
+        context += `
+- ${strength.title}: ${strength.summary}
+  Details: ${strength.details}
+  Key Metrics: ${strength.metrics?.join(', ')}
+  Technologies: ${strength.technologies?.join(', ')}
+  Impact: ${strength.impact}`;
+      }
     });
 
     context += `
 
 KEY STORIES:`;
-    stories.forEach((story: DatabaseStory) => {
+    stories.forEach((story: any) => {
       context += `
 - ${story.title}
   Situation: ${story.situation}
@@ -142,66 +141,247 @@ Please answer questions about Robert in a helpful, informative way. Be specific 
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, messages = [] } = await req.json();
-
-    if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json(
-        { error: 'OpenAI API key is not configured' },
-        { status: 500 }
-      );
-    }
+    const { message, messages = [], model = 'gpt-4' } = await req.json();
 
     // Get candidate context
     const candidateContext = await getCandidateContext();
 
-    // Prepare messages for OpenAI
-    const systemMessage = {
-      role: 'system' as const,
-      content: candidateContext
-    };
+    // Create streaming response based on selected model
+    if (model === 'claude') {
+      if (!process.env.ANTHROPIC_API_KEY) {
+        return NextResponse.json(
+          { error: 'Anthropic API key is not configured' },
+          { status: 500 }
+        );
+      }
 
-    const allMessages = [
-      systemMessage,
-      ...messages,
-      { role: 'user' as const, content: message }
-    ];
-
-    // Create streaming response
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: allMessages,
-      temperature: 0.7,
-      max_tokens: 1000,
-      stream: true,
-    });
-
-    // Create a readable stream
-    const encoder = new TextEncoder();
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const chunk of response) {
-            const content = chunk.choices[0]?.delta?.content || '';
-            if (content) {
-              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`));
-            }
-          }
-          controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-          controller.close();
-        } catch (error) {
-          console.error('Streaming error:', error);
-          controller.error(error);
+      let response;
+      try {
+        response = await anthropic.messages.create({
+          model: 'claude-3-5-haiku-20241022',
+          max_tokens: 1000,
+          temperature: 0.7,
+          system: candidateContext,
+          messages: [
+            ...messages,
+            { role: 'user', content: message }
+          ],
+          stream: true,
+        });
+      } catch (error: any) {
+        // Handle Claude API errors before streaming
+        if (error.error?.type === 'overloaded_error') {
+          const errorMessage = "Claude is currently experiencing high demand. Please try again in a moment or switch to GPT-4 or Gemini.";
+          const encoder = new TextEncoder();
+          const errorStream = new ReadableStream({
+            start(controller) {
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: errorMessage })}\n\n`));
+              controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+              controller.close();
+            },
+          });
+          
+          return new Response(errorStream, {
+            headers: {
+              'Content-Type': 'text/event-stream',
+              'Cache-Control': 'no-cache',
+              'Connection': 'keep-alive',
+            },
+          });
         }
-      },
-    });
+        
+        // Re-throw other errors
+        throw error;
+      }
 
-    return new Response(stream, {
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-      },
-    });
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        async start(controller) {
+          try {
+            for await (const chunk of response) {
+              if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
+                const content = chunk.delta.text;
+                if (content) {
+                  controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`));
+                }
+              }
+            }
+            controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+            controller.close();
+          } catch (error: any) {
+            console.error('Claude streaming error:', error);
+            
+            // Handle specific Claude errors
+            if (error.error?.type === 'overloaded_error') {
+              const errorMessage = "Claude is currently experiencing high demand. Please try again in a moment or switch to GPT-4 or Gemini.";
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: errorMessage })}\n\n`));
+            } else {
+              const errorMessage = "Sorry, I encountered an error with Claude. Please try again or switch to a different model.";
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: errorMessage })}\n\n`));
+            }
+            
+            controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+            controller.close();
+          }
+        },
+      });
+
+      return new Response(stream, {
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+        },
+      });
+
+    } else if (model === 'gemini') {
+      if (!process.env.GOOGLE_API_KEY) {
+        return NextResponse.json(
+          { error: 'Google API key is not configured' },
+          { status: 500 }
+        );
+      }
+
+      const geminiModel = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+      
+      // Format conversation for Gemini
+      const conversationHistory = messages.map((msg: any) => ({
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.content }],
+      }));
+
+      const chat = geminiModel.startChat({
+        history: conversationHistory,
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 1000,
+        },
+      });
+
+      const fullPrompt = `${candidateContext}\n\nUser: ${message}`;
+      
+      try {
+        const result = await chat.sendMessageStream(fullPrompt);
+
+        const encoder = new TextEncoder();
+        const stream = new ReadableStream({
+          async start(controller) {
+            try {
+              for await (const chunk of result.stream) {
+                const content = chunk.text();
+                if (content) {
+                  controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`));
+                }
+              }
+              controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+              controller.close();
+            } catch (error: any) {
+              console.error('Gemini streaming error:', error);
+              
+              // Handle specific Gemini errors
+              if (error.status === 429) {
+                const errorMessage = "Gemini has exceeded its rate limit. Please try again later or switch to GPT-4 or Claude.";
+                controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: errorMessage })}\n\n`));
+              } else {
+                const errorMessage = "Sorry, I encountered an error with Gemini. Please try again or switch to a different model.";
+                controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: errorMessage })}\n\n`));
+              }
+              
+              controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+              controller.close();
+            }
+          },
+        });
+
+        return new Response(stream, {
+          headers: {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+          },
+        });
+        
+      } catch (error: any) {
+        // Handle Gemini API errors before streaming
+        if (error.status === 429) {
+          const errorMessage = "Gemini has exceeded its rate limit. Please try again later or switch to GPT-4 or Claude.";
+          const encoder = new TextEncoder();
+          const errorStream = new ReadableStream({
+            start(controller) {
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: errorMessage })}\n\n`));
+              controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+              controller.close();
+            },
+          });
+          
+          return new Response(errorStream, {
+            headers: {
+              'Content-Type': 'text/event-stream',
+              'Cache-Control': 'no-cache',
+              'Connection': 'keep-alive',
+            },
+          });
+        }
+        
+        // Re-throw other errors
+        throw error;
+      }
+
+    } else {
+      // Default to GPT-4
+      if (!process.env.OPENAI_API_KEY) {
+        return NextResponse.json(
+          { error: 'OpenAI API key is not configured' },
+          { status: 500 }
+        );
+      }
+
+      const systemMessage = {
+        role: 'system' as const,
+        content: candidateContext
+      };
+
+      const allMessages = [
+        systemMessage,
+        ...messages,
+        { role: 'user' as const, content: message }
+      ];
+
+      const response = await openai.chat.completions.create({
+        model: 'gpt-4o-mini',
+        messages: allMessages,
+        temperature: 0.7,
+        max_tokens: 1000,
+        stream: true,
+      });
+
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        async start(controller) {
+          try {
+            for await (const chunk of response) {
+              const content = chunk.choices[0]?.delta?.content || '';
+              if (content) {
+                controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`));
+              }
+            }
+            controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+            controller.close();
+          } catch (error) {
+            console.error('OpenAI streaming error:', error);
+            controller.error(error);
+          }
+        },
+      });
+
+      return new Response(stream, {
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+        },
+      });
+    }
 
   } catch (error) {
     console.error('Chat API error:', error);

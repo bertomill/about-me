@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Send, RotateCcw, MessageCircle, Sparkles, User, Bot } from 'lucide-react';
+import { Send, RotateCcw, MessageCircle, Sparkles, User, Bot, ChevronDown } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 interface Message {
@@ -10,12 +10,22 @@ interface Message {
   timestamp: Date;
 }
 
+type AIModel = 'gpt-4' | 'claude' | 'gemini';
+
 export default function QuestionInterface() {
   const [question, setQuestion] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [streamingResponse, setStreamingResponse] = useState('');
+  const [selectedModel, setSelectedModel] = useState<AIModel>('gpt-4');
+  const [showModelDropdown, setShowModelDropdown] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  const models = [
+    { id: 'gpt-4' as AIModel, name: 'GPT-4', description: 'OpenAI GPT-4o-mini' },
+    { id: 'claude' as AIModel, name: 'Claude', description: 'Anthropic Claude 3.5 Haiku' },
+    { id: 'gemini' as AIModel, name: 'Gemini', description: 'Google Gemini 2.0 Flash' }
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +57,8 @@ export default function QuestionInterface() {
         },
         body: JSON.stringify({
           message: userMessage.content,
-          messages: messages.map(m => ({ role: m.role, content: m.content }))
+          messages: messages.map(m => ({ role: m.role, content: m.content })),
+          model: selectedModel
         }),
         signal: abortControllerRef.current.signal,
       });
@@ -189,6 +200,43 @@ export default function QuestionInterface() {
         </div>
       )}
 
+      {/* Model Selection */}
+      <div className="mb-4">
+        <div className="relative inline-block">
+          <button
+            type="button"
+            onClick={() => setShowModelDropdown(!showModelDropdown)}
+            className="flex items-center space-x-2 px-3 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200"
+          >
+            <Bot size={16} className="text-gray-600" />
+            <span className="text-sm font-medium text-gray-700">
+              {models.find(m => m.id === selectedModel)?.name}
+            </span>
+            <ChevronDown size={16} className={`text-gray-600 transition-transform duration-200 ${showModelDropdown ? 'rotate-180' : ''}`} />
+          </button>
+          
+          {showModelDropdown && (
+            <div className="absolute top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+              {models.map((model) => (
+                <button
+                  key={model.id}
+                  onClick={() => {
+                    setSelectedModel(model.id);
+                    setShowModelDropdown(false);
+                  }}
+                  className={`w-full px-4 py-3 text-left hover:bg-gray-50 transition-all duration-200 first:rounded-t-lg last:rounded-b-lg ${
+                    selectedModel === model.id ? 'bg-green-50 text-green-700' : 'text-gray-700'
+                  }`}
+                >
+                  <div className="font-medium">{model.name}</div>
+                  <div className="text-xs text-gray-500">{model.description}</div>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Input Form */}
       <form onSubmit={handleSubmit} className="mb-6">
         <div className="relative">
@@ -241,10 +289,10 @@ export default function QuestionInterface() {
       {messages.length === 0 && (
         <div className="text-center">
           <div className="mb-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">
               Try asking questions like:
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-sm italic">
               Click on any question below to get started
             </p>
           </div>

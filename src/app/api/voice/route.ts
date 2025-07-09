@@ -49,9 +49,25 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+// Cache for storing Robert's context to avoid repeated database calls
+// This significantly speeds up the voice assistant loading time by eliminating
+// the slow database queries that were causing the loading bar to get stuck at 25%
+// Cache duration is set to 5 minutes to balance performance with data freshness
+let candidateContextCache: string | null = null;
+let cacheTimestamp: number = 0;
+const CACHE_DURATION = 5 * 60 * 1000; // Cache for 5 minutes (in milliseconds)
+
 // Function to get candidate context (reused from chat route)
 async function getCandidateContext() {
   try {
+    // Check if we have a valid cached context to avoid slow database queries
+    const now = Date.now();
+    if (candidateContextCache && (now - cacheTimestamp) < CACHE_DURATION) {
+      console.log('Using cached candidate context - much faster!');
+      return candidateContextCache;
+    }
+
+    console.log('Fetching fresh candidate context from database...');
     const [personalResponse, educationResponse, experienceResponse, strengthsResponse, storiesResponse] = await Promise.all([
       supabase.from('personal_info').select('*').single(),
       supabase.from('education').select('*'),
@@ -130,6 +146,11 @@ KEY STORIES:`;
     context += `
 
 Please answer questions about Robert in a helpful, conversational way suitable for voice interaction. Be specific and use examples from his experience. Keep responses concise but informative since this is a voice conversation.`;
+
+    // Store the context in cache with timestamp to speed up future requests
+    candidateContextCache = context;
+    cacheTimestamp = now;
+    console.log('Candidate context cached successfully');
 
     return context;
   } catch (error) {
@@ -235,6 +256,26 @@ export async function POST(req: NextRequest) {
     console.error('Voice API error:', error);
     return NextResponse.json(
       { error: 'Failed to process voice request' },
+      { status: 500 }
+    );
+  }
+}
+
+// GET endpoint to quickly retrieve cached candidate context for voice interface setup
+// This avoids slow database queries during voice assistant initialization
+export async function GET() {
+  try {
+    const candidateContext = await getCandidateContext();
+    
+    return NextResponse.json({
+      context: candidateContext,
+      cached: candidateContextCache !== null,
+      cacheAge: candidateContextCache ? Date.now() - cacheTimestamp : 0
+    });
+  } catch (error) {
+    console.error('Error getting candidate context for voice setup:', error);
+    return NextResponse.json(
+      { error: 'Failed to get candidate context' },
       { status: 500 }
     );
   }

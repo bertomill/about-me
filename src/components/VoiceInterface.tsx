@@ -37,68 +37,25 @@ export default function VoiceInterface() {
 
   const getCandidateContext = async () => {
     try {
-      setLoadingStep('🔐 Securing connection...');
-      await new Promise(resolve => setTimeout(resolve, 300));
+      setLoadingStep('📋 Loading Robert\'s profile...');
       
-      setLoadingStep('📋 Loading Robert\'s experience...');
-      await new Promise(resolve => setTimeout(resolve, 400));
-      
-      setLoadingStep('🎓 Gathering education details...');
-      await new Promise(resolve => setTimeout(resolve, 400));
-      
-      setLoadingStep('🏆 Collecting achievements...');
-      await new Promise(resolve => setTimeout(resolve, 400));
-      
-      setLoadingStep('💡 Analyzing key stories...');
-      await new Promise(resolve => setTimeout(resolve, 400));
-      
-      setLoadingStep('🧠 Preparing AI context...');
-      
-      const response = await fetch('/api/chat', {
-        method: 'POST',
+      // Use the new faster cached endpoint instead of the slow chat endpoint
+      // This dramatically speeds up loading time since the context is cached
+      const response = await fetch('/api/voice', {
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          message: 'Please provide a comprehensive overview of Robert Mill for voice interview context.',
-          messages: []
-        }),
       });
       
       if (response.ok) {
-        const reader = response.body?.getReader();
-        const decoder = new TextDecoder();
-        let context = '';
-        
-        if (reader) {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            
-            const chunk = decoder.decode(value);
-            const lines = chunk.split('\n');
-            
-            for (const line of lines) {
-              if (line.startsWith('data: ')) {
-                const data = line.slice(6);
-                if (data === '[DONE]') continue;
-                try {
-                  const parsed = JSON.parse(data);
-                  if (parsed.content) {
-                    context += parsed.content;
-                  }
-                } catch {
-                  // Ignore parsing errors for malformed JSON chunks
-                }
-              }
-            }
-          }
-        }
+        const data = await response.json();
+        console.log('Got candidate context:', data.cached ? 'from cache' : 'fresh from database');
         
         return `You are an AI assistant helping interviewers learn about Robert Mill through natural voice conversation. 
         Be conversational, friendly, and informative. 
         
         IMPORTANT: When the conversation starts, immediately introduce yourself by saying: "Hello! I'm Robert's interview assistant and I'm happy to answer any questions about his background, experience, and qualifications. What would you like to know?"
         
-        Here's the context about Robert: ${context}`;
+        ${data.context}`;
       }
     } catch (error) {
       console.error('Error getting candidate context:', error);
@@ -149,13 +106,19 @@ export default function VoiceInterface() {
         throw new Error('No client secret received');
       }
 
-      // Get candidate context for instructions
+      // Get candidate context for instructions with smoother progress updates
       setLoadingProgress(25);
       const instructions = await getCandidateContext();
+      
+      // Update progress more smoothly after getting context
+      setLoadingProgress(45);
+      setLoadingStep('🧠 Processing context...');
+      await new Promise(resolve => setTimeout(resolve, 200));
 
       // Create RealtimeAgent
-      setLoadingProgress(75);
+      setLoadingProgress(65);
       setLoadingStep('🤖 Setting up AI assistant...');
+      await new Promise(resolve => setTimeout(resolve, 300));
       agentRef.current = new RealtimeAgent({
         name: 'Interview Assistant',
         instructions: instructions,
@@ -163,9 +126,13 @@ export default function VoiceInterface() {
       });
 
       // Create RealtimeSession with the agent
-      setLoadingProgress(85);
+      setLoadingProgress(80);
       setLoadingStep('🎤 Establishing voice connection...');
       sessionRef.current = new RealtimeSession(agentRef.current);
+      
+      setLoadingProgress(90);
+      setLoadingStep('🔊 Preparing audio interface...');
+      await new Promise(resolve => setTimeout(resolve, 200));
 
       // Remove any existing listeners first to prevent duplicates
       sessionRef.current.removeAllListeners?.();
@@ -215,52 +182,28 @@ export default function VoiceInterface() {
       });
 
       // Connect the session
-      setLoadingProgress(90);
       await sessionRef.current.connect({ 
         apiKey: client_secret,
       });
 
       setLoadingProgress(100);
+      setLoadingStep('✅ Connected! Ready to chat...');
+      // Brief delay to show completion message
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
       setConnectionStatus('connected');
       setIsConnected(true);
 
-      // AI speaks first - greeting message
-      setTimeout(() => {
-        // Add the greeting message to the conversation
-        const greetingMessage: VoiceMessage = {
-          type: 'assistant',
-          content: "Hello! I'm Robert's interview assistant and I'm happy to answer any questions about his background, experience, and qualifications. What would you like to know?",
-          timestamp: new Date()
-        };
-        setMessages([greetingMessage]);
+      // Add a welcome message to the conversation history
+      // Note: The AI will automatically greet when the user first speaks
+      const greetingMessage: VoiceMessage = {
+        type: 'assistant',
+        content: "Hello! I'm Robert's interview assistant and I'm happy to answer any questions about his background, experience, and qualifications. What would you like to know?",
+        timestamp: new Date()
+      };
+      setMessages([greetingMessage]);
 
-        // Trigger the AI to speak the greeting by sending a system message
-        if (sessionRef.current) {
-          try {
-            // Send a message to trigger the AI's greeting
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (sessionRef.current as any).send({
-              type: 'conversation.item.create',
-              item: {
-                type: 'message',
-                role: 'assistant',
-                content: [{
-                  type: 'input_text',
-                  text: "Hello! I'm Robert's interview assistant and I'm happy to answer any questions about his background, experience, and qualifications. What would you like to know?"
-                }]
-              }
-            });
-            
-            // Request a response to make the AI speak
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (sessionRef.current as any).send({
-              type: 'response.create'
-            });
-          } catch (error) {
-            console.error('Error sending greeting:', error);
-          }
-        }
-      }, 1000);
+      console.log('Voice assistant connected successfully! Ready for conversation.');
 
     } catch (error) {
       console.error('Error connecting to realtime API:', error);
@@ -337,50 +280,56 @@ export default function VoiceInterface() {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-8 border border-gray-200">
-      <div className="space-y-6">
+    <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 backdrop-blur-sm">
+      <div className="space-y-8">
         {/* Connection Status */}
         <div className="text-center">
-          <div className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-medium ${
-            connectionStatus === 'connected' ? 'bg-green-100 text-green-700' :
-            connectionStatus === 'connecting' ? 'bg-yellow-100 text-yellow-700' :
-            connectionStatus === 'error' ? 'bg-red-100 text-red-700' :
-            'bg-gray-100 text-gray-600'
+          <div className={`inline-flex items-center space-x-3 px-4 py-2 rounded-full text-sm font-medium shadow-sm border ${
+            connectionStatus === 'connected' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+            connectionStatus === 'connecting' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+            connectionStatus === 'error' ? 'bg-red-50 text-red-700 border-red-200' :
+            'bg-gray-50 text-gray-600 border-gray-200'
           }`}>
-            {connectionStatus === 'connecting' && <Loader size={12} className="animate-spin" />}
-            <div className={`w-2 h-2 rounded-full ${
-              connectionStatus === 'connected' ? 'bg-green-500' :
-              connectionStatus === 'connecting' ? 'bg-yellow-500' :
-              connectionStatus === 'error' ? 'bg-red-500' :
+            {connectionStatus === 'connecting' && <Loader size={14} className="animate-spin" />}
+            <div className={`w-2.5 h-2.5 rounded-full ${
+              connectionStatus === 'connected' ? 'bg-emerald-500 shadow-emerald-300 shadow-sm' :
+              connectionStatus === 'connecting' ? 'bg-blue-500 shadow-blue-300 shadow-sm' :
+              connectionStatus === 'error' ? 'bg-red-500 shadow-red-300 shadow-sm' :
               'bg-gray-400'
             }`} />
-            <span className="capitalize">{connectionStatus}</span>
+            <span className="capitalize font-semibold">{connectionStatus}</span>
           </div>
         </div>
 
         {/* Connection Loading Progress */}
         {connectionStatus === 'connecting' && (
-          <div className="mb-6">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <div className="flex items-center space-x-3 mb-3">
-                <Loader size={16} className="text-blue-600 animate-spin" />
-                <span className="text-blue-700 font-medium">Connecting to AI Assistant...</span>
-                <span className="text-blue-600 text-sm">({loadingProgress}%)</span>
+          <div className="mb-8">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200/50 rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="p-2 bg-blue-100 rounded-full">
+                  <Loader size={18} className="text-blue-600 animate-spin" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-blue-800 font-semibold text-base">Connecting to AI Assistant</span>
+                    <span className="text-blue-600 text-sm font-medium">({loadingProgress}%)</span>
+                  </div>
+                </div>
               </div>
-              <div className="w-full bg-blue-200 rounded-full h-3">
+              <div className="w-full bg-white/80 rounded-full h-2 mb-3 shadow-inner">
                 <div 
-                  className="bg-blue-600 h-3 rounded-full transition-all duration-300 ease-out" 
-                  style={{ width: `${Math.max(loadingProgress, 5)}%` }}
+                  className="bg-gradient-to-r from-blue-500 to-indigo-500 h-2 rounded-full transition-all duration-500 ease-out shadow-sm" 
+                  style={{ width: `${Math.max(loadingProgress, 8)}%` }}
                 ></div>
               </div>
-              <p className="text-blue-600 text-xs mt-2">
+              <p className="text-blue-700 text-sm font-medium">
                 {loadingStep || (loadingProgress < 30 ? 'Getting secure token...' :
                  loadingProgress < 60 ? 'Loading candidate context...' :
                  loadingProgress < 90 ? 'Setting up AI agent...' :
                  'Establishing voice connection...')}
               </p>
               {process.env.NODE_ENV === 'development' && (
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 mt-2 px-3 py-1 bg-white/60 rounded-md">
                   Debug: Status={connectionStatus}, Progress={loadingProgress}%
                 </p>
               )}
@@ -396,24 +345,25 @@ export default function VoiceInterface() {
         )}
 
         {/* Voice Controls */}
-        <div className="flex justify-center items-center space-x-4">
+        <div className="flex justify-center items-center space-x-6">
           {!isConnected ? (
             <button
               onClick={connectToRealtime}
               disabled={connectionStatus === 'connecting'}
-              className="w-16 h-16 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg"
+              className="group relative w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-all duration-300 shadow-xl shadow-emerald-500/25 hover:shadow-2xl hover:shadow-emerald-500/40 hover:scale-105 active:scale-95"
             >
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent"></div>
               {connectionStatus === 'connecting' ? (
-                <Loader size={24} className="text-white animate-spin" />
+                <Loader size={28} className="text-white animate-spin relative z-10" />
               ) : (
-                <Phone size={24} className="text-white" />
+                <Phone size={28} className="text-white relative z-10 group-hover:scale-110 transition-transform duration-200" />
               )}
             </button>
           ) : (
             <>
               <button
                 onClick={clearConversation}
-                className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full flex items-center justify-center transition-all duration-200"
+                className="w-14 h-14 bg-white border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-600 hover:text-gray-700 rounded-full flex items-center justify-center transition-all duration-200 shadow-md hover:shadow-lg"
                 title="Clear conversation"
               >
                 <Volume2 size={20} />
@@ -422,19 +372,20 @@ export default function VoiceInterface() {
               <div className="relative">
                 <button
                   onClick={disconnect}
-                  className="w-16 h-16 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg"
+                  className="group relative w-20 h-20 bg-gradient-to-br from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl shadow-red-500/25 hover:shadow-2xl hover:shadow-red-500/40 hover:scale-105 active:scale-95"
                 >
-                  <PhoneOff size={24} className="text-white" />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent"></div>
+                  <PhoneOff size={28} className="text-white relative z-10 group-hover:scale-110 transition-transform duration-200" />
                 </button>
                 
                 {/* Recording Indicator */}
                 {isRecording && (
-                  <div className="absolute -inset-2 rounded-full border-4 border-green-400 animate-pulse" />
+                  <div className="absolute -inset-3 rounded-full border-4 border-emerald-400 animate-pulse shadow-lg shadow-emerald-400/50" />
                 )}
               </div>
 
               <button
-                className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full flex items-center justify-center transition-all duration-200"
+                className="w-14 h-14 bg-white border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-600 hover:text-gray-700 rounded-full flex items-center justify-center transition-all duration-200 shadow-md hover:shadow-lg"
                 title="Speaker volume"
               >
                 <Volume2 size={20} />
@@ -446,11 +397,11 @@ export default function VoiceInterface() {
         {/* Recording Status */}
         {isConnected && (
           <div className="text-center">
-            <div className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-medium ${
-              isRecording ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600'
+            <div className={`inline-flex items-center space-x-3 px-5 py-3 rounded-full text-sm font-semibold shadow-sm border ${
+              isRecording ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-gray-50 text-gray-600 border-gray-200'
             }`}>
-              <div className={`w-2 h-2 rounded-full ${
-                isRecording ? 'bg-red-500 animate-pulse' : 'bg-gray-400'
+              <div className={`w-3 h-3 rounded-full ${
+                isRecording ? 'bg-emerald-500 animate-pulse shadow-emerald-300 shadow-md' : 'bg-gray-400'
               }`} />
               <span>{isRecording ? 'Listening...' : 'Ready to listen'}</span>
             </div>
@@ -459,35 +410,40 @@ export default function VoiceInterface() {
 
         {/* Live Transcript */}
         {currentTranscript && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-            <h4 className="text-sm font-medium text-gray-900 mb-2">AI is responding:</h4>
-            <p className="text-gray-700 text-sm">{currentTranscript}</p>
+          <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/50 rounded-2xl p-5 shadow-sm">
+            <h4 className="text-base font-semibold text-emerald-800 mb-3 flex items-center space-x-2">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+              <span>AI is responding:</span>
+            </h4>
+            <p className="text-gray-700 text-sm leading-relaxed">{currentTranscript}</p>
           </div>
         )}
 
         {/* Conversation History */}
         {messages.length > 0 && (
-          <div className="space-y-4 max-h-64 overflow-y-auto">
-            <h4 className="text-sm font-medium text-gray-900">Conversation History:</h4>
+          <div className="space-y-5 max-h-80 overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Conversation History</h4>
             {messages.map((message, index) => (
               <div key={index} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`flex items-start space-x-3 max-w-3xl ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    message.type === 'user' ? 'bg-gray-400' : 'bg-green-600'
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-md ${
+                    message.type === 'user' 
+                      ? 'bg-gradient-to-br from-slate-400 to-slate-500' 
+                      : 'bg-gradient-to-br from-emerald-500 to-green-600'
                   }`}>
                     {message.type === 'user' ? (
-                      <User size={16} className="text-white" />
+                      <User size={18} className="text-white" />
                     ) : (
-                      <Bot size={16} className="text-white" />
+                      <Bot size={18} className="text-white" />
                     )}
                   </div>
-                  <div className={`rounded-2xl p-3 ${
+                  <div className={`rounded-2xl p-4 shadow-sm border ${
                     message.type === 'user'
-                      ? 'bg-gray-100 border border-gray-200'
-                      : 'bg-green-50 border border-green-200'
+                      ? 'bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200'
+                      : 'bg-gradient-to-br from-emerald-50 to-green-50 border-emerald-200'
                   }`}>
-                    <p className="text-gray-900 text-sm">{message.content}</p>
-                    <div className="text-xs text-gray-500 mt-1">
+                    <p className="text-gray-900 text-sm leading-relaxed">{message.content}</p>
+                    <div className="text-xs text-gray-500 mt-2 font-medium">
                       {message.timestamp.toLocaleTimeString()}
                     </div>
                   </div>
@@ -500,19 +456,20 @@ export default function VoiceInterface() {
         {/* Sample Voice Prompts */}
         {connectionStatus !== 'connecting' && (
           <div className="text-center">
-            <div className="mb-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Try asking questions like:
+            <div className="mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3 flex items-center space-x-2">
+                <span>Sample Questions</span>
+                <span className="text-emerald-600">💡</span>
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 text-lg mb-6">
                 {!isConnected 
-                  ? "Click the phone icon to start, then speak naturally"
-                  : "Speak naturally - the AI is listening and ready to respond"
+                  ? "Click the TopGrade AI phone icon to start, then speak naturally"
+                  : "TopGrade AI is listening - speak naturally and get instant insights"
                 }
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
               {[
                 "Tell me about Robert's experience with AI and machine learning",
                 "What was Robert's biggest achievement at CIBC?",
@@ -523,15 +480,15 @@ export default function VoiceInterface() {
               ].map((prompt, index) => (
                 <div
                   key={index}
-                  className="p-4 bg-white border border-gray-200 rounded-lg text-left"
+                  className="group p-5 bg-gradient-to-br from-white to-gray-50 border border-gray-200 hover:border-emerald-300 rounded-2xl text-left transition-all duration-200 hover:shadow-lg hover:shadow-emerald-100 cursor-pointer hover:scale-105"
                 >
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-100 to-green-100 group-hover:from-emerald-200 group-hover:to-green-200 rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm">
+                      <svg className="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <span className="text-gray-700 text-sm">
+                    <span className="text-gray-700 text-sm leading-relaxed font-medium group-hover:text-gray-900 transition-colors duration-200">
                       &ldquo;{prompt}&rdquo;
                     </span>
                   </div>
@@ -539,23 +496,25 @@ export default function VoiceInterface() {
               ))}
             </div>
 
-            <div className="text-sm text-gray-500 space-y-2">
+            <div className="text-sm text-gray-600 space-y-3">
               {!isConnected ? (
                 <>
-                  <p>Click the phone icon to start a voice conversation with the AI.</p>
-                  <p>The AI will listen and respond naturally about Robert&apos;s background.</p>
+                  <p className="text-base">Click the phone icon to start a voice conversation with the AI.</p>
+                  <p className="text-base">The AI will listen and respond naturally about Robert&apos;s background.</p>
                 </>
               ) : (
                 <>
-                  <p>Voice conversation is active - just speak naturally!</p>
-                  <p>The AI will detect when you start speaking and respond about Robert&apos;s background.</p>
+                  <p className="text-base">Voice conversation is active - just speak naturally!</p>
+                  <p className="text-base">The AI will detect when you start speaking and respond about Robert&apos;s background.</p>
                 </>
               )}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-4">
-                <p className="text-blue-700 text-xs">
-                  <strong>Note:</strong> This uses OpenAI&apos;s Realtime API with continuous session handling for natural voice conversations. 
-                  The AI will automatically detect when you start and stop speaking, handle interruptions, and maintain conversation context.
-                  Make sure your microphone is enabled and you&apos;re in a quiet environment for best results.
+              <div className="bg-gradient-to-r from-slate-50 to-slate-100 border border-slate-200/50 rounded-2xl p-5 mt-6 shadow-sm">
+                <p className="text-slate-700 text-sm leading-relaxed">
+                  <strong className="font-semibold text-emerald-700">🚀 TopGrade AI Technology:</strong> Advanced Realtime API with intelligent conversation handling. 
+                  Our system automatically detects speech patterns, handles natural interruptions, and maintains contextual awareness throughout your interview session.
+                  <span className="text-slate-600 block mt-2 text-xs">
+                    ✓ Microphone permissions required  •  ✓ Optimized for quiet environments  •  ✓ Real-time transcription
+                  </span>
                 </p>
               </div>
             </div>
