@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
+// This API route doesn't need the request parameter
+export async function POST() {
   try {
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json(

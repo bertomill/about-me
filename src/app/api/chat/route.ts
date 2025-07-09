@@ -2,6 +2,49 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { supabase } from '@/lib/supabase';
 
+// Define proper types for database entities to avoid any types
+// These interfaces match the structure of data from our Supabase database
+interface DatabaseEducation {
+  degree: string;
+  institution: string;
+  graduation_year: string;
+  achievements?: string[];
+  relevant_coursework?: string[];
+  why_chosen: string;
+}
+
+interface DatabaseExperience {
+  position: string;
+  company: string;
+  start_date: string;
+  end_date: string;
+  location: string;
+  how_found_job: string;
+  what_hired_to_do: string;
+  manager_description: string;
+  biggest_win: string;
+  toughest_challenge: string;
+  why_made_move: string;
+  what_learned: string;
+  accomplishments?: string[];
+  skills?: string[];
+  technologies?: string[];
+}
+
+interface DatabaseStrength {
+  strength: string;
+}
+
+interface DatabaseStory {
+  title: string;
+  situation: string;
+  task: string;
+  action: string;
+  result: string;
+  learned: string;
+  tags?: string[];
+}
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -36,7 +79,7 @@ PERSONAL INFORMATION:
 
 EDUCATION:`;
 
-    education.forEach((edu: any) => {
+    education.forEach((edu: DatabaseEducation) => {
       context += `
 - ${edu.degree} from ${edu.institution} (${edu.graduation_year})
   Achievements: ${edu.achievements?.join(', ')}
@@ -48,7 +91,7 @@ EDUCATION:`;
 
 WORK EXPERIENCE:`;
 
-    experience.forEach((exp: any) => {
+    experience.forEach((exp: DatabaseExperience) => {
       context += `
 - ${exp.position} at ${exp.company} (${exp.start_date} - ${exp.end_date})
   Location: ${exp.location}
@@ -67,7 +110,7 @@ WORK EXPERIENCE:`;
     context += `
 
 CORE STRENGTHS:`;
-    strengths.forEach((strength: any) => {
+    strengths.forEach((strength: DatabaseStrength) => {
       context += `
 - ${strength.strength}`;
     });
@@ -75,7 +118,7 @@ CORE STRENGTHS:`;
     context += `
 
 KEY STORIES:`;
-    stories.forEach((story: any) => {
+    stories.forEach((story: DatabaseStory) => {
       context += `
 - ${story.title}
   Situation: ${story.situation}

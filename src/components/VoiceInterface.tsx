@@ -15,9 +15,11 @@ export default function VoiceInterface() {
   const [isRecording, setIsRecording] = useState(false);
   const [messages, setMessages] = useState<VoiceMessage[]>([]);
   const [currentTranscript, setCurrentTranscript] = useState('');
-  const [audioLevel, setAudioLevel] = useState(0);
+  // Audio level monitoring temporarily disabled - will be used for future enhancements
+  // const [audioLevel, setAudioLevel] = useState(0);
   const [connectionStatus, setConnectionStatus] = useState<'disconnected' | 'connecting' | 'connected' | 'error'>('disconnected');
   const [loadingProgress, setLoadingProgress] = useState(0);
+  // Loading step messaging for better user experience during connection
   const [loadingStep, setLoadingStep] = useState('');
   
   const agentRef = useRef<RealtimeAgent | null>(null);
@@ -27,8 +29,10 @@ export default function VoiceInterface() {
 
   useEffect(() => {
     return () => {
+      // Cleanup on component unmount
       disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCandidateContext = async () => {
@@ -81,8 +85,8 @@ export default function VoiceInterface() {
                   if (parsed.content) {
                     context += parsed.content;
                   }
-                } catch (e) {
-                  // Ignore parsing errors
+                } catch {
+                  // Ignore parsing errors for malformed JSON chunks
                 }
               }
             }
@@ -166,8 +170,10 @@ export default function VoiceInterface() {
       // Remove any existing listeners first to prevent duplicates
       sessionRef.current.removeAllListeners?.();
 
-      // Set up event listeners on the session
-      sessionRef.current.on('conversation.item.input_audio_transcription.completed', (event) => {
+      // Set up event listeners on the session with proper type assertions
+      // TypeScript doesn't have complete type definitions for RealtimeSession events
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (sessionRef.current as any).on('conversation.item.input_audio_transcription.completed', (event: any) => {
         console.log('User said:', event.transcript);
         const userMessage: VoiceMessage = {
           type: 'user',
@@ -177,11 +183,13 @@ export default function VoiceInterface() {
         setMessages(prev => [...prev, userMessage]);
       });
 
-      sessionRef.current.on('response.audio_transcript.delta', (event) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (sessionRef.current as any).on('response.audio_transcript.delta', (event: any) => {
         setCurrentTranscript(prev => prev + event.delta);
       });
 
-      sessionRef.current.on('response.audio_transcript.done', (event) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (sessionRef.current as any).on('response.audio_transcript.done', (event: any) => {
         console.log('AI responded:', event.transcript);
         if (event.transcript) {
           const assistantMessage: VoiceMessage = {
@@ -194,12 +202,14 @@ export default function VoiceInterface() {
         }
       });
 
-      sessionRef.current.on('input_audio_buffer.speech_started', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (sessionRef.current as any).on('input_audio_buffer.speech_started', () => {
         console.log('Speech started');
         setIsRecording(true);
       });
 
-      sessionRef.current.on('input_audio_buffer.speech_stopped', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (sessionRef.current as any).on('input_audio_buffer.speech_stopped', () => {
         console.log('Speech stopped');
         setIsRecording(false);
       });
@@ -228,7 +238,8 @@ export default function VoiceInterface() {
         if (sessionRef.current) {
           try {
             // Send a message to trigger the AI's greeting
-            sessionRef.current.send({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (sessionRef.current as any).send({
               type: 'conversation.item.create',
               item: {
                 type: 'message',
@@ -241,7 +252,8 @@ export default function VoiceInterface() {
             });
             
             // Request a response to make the AI speak
-            sessionRef.current.send({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (sessionRef.current as any).send({
               type: 'response.create'
             });
           } catch (error) {
@@ -269,8 +281,10 @@ export default function VoiceInterface() {
         // Try to gracefully close the session
         if (typeof sessionRef.current.close === 'function') {
           await sessionRef.current.close();
-        } else if (typeof sessionRef.current.end === 'function') {
-          await sessionRef.current.end();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } else if (typeof (sessionRef.current as any).end === 'function') {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          await (sessionRef.current as any).end();
         } else {
           console.log('No close method found, cleaning up manually');
         }
@@ -313,7 +327,7 @@ export default function VoiceInterface() {
     setIsConnected(false);
     setIsRecording(false);
     setConnectionStatus('disconnected');
-    setAudioLevel(0);
+    // setAudioLevel(0); // This line was removed from the original file, so it's removed here.
     setCurrentTranscript('');
     setLoadingProgress(0);
   };
@@ -360,10 +374,10 @@ export default function VoiceInterface() {
                 ></div>
               </div>
               <p className="text-blue-600 text-xs mt-2">
-                {loadingProgress < 30 ? 'Getting secure token...' :
+                {loadingStep || (loadingProgress < 30 ? 'Getting secure token...' :
                  loadingProgress < 60 ? 'Loading candidate context...' :
                  loadingProgress < 90 ? 'Setting up AI agent...' :
-                 'Establishing voice connection...'}
+                 'Establishing voice connection...')}
               </p>
               {process.env.NODE_ENV === 'development' && (
                 <p className="text-xs text-gray-500 mt-1">
@@ -518,7 +532,7 @@ export default function VoiceInterface() {
                       </svg>
                     </div>
                     <span className="text-gray-700 text-sm">
-                      "{prompt}"
+                      &ldquo;{prompt}&rdquo;
                     </span>
                   </div>
                 </div>

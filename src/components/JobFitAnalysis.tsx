@@ -102,7 +102,7 @@ export default function JobFitAnalysis() {
       category: "technical",
       matchLevel: "perfect",
       robertsExperience: "Strategic understanding of AI governance and ethical implementation, including contributions to enterprise AI guidelines",
-      evidence: ["Initial contributor to CIBC's generative AI guidelines", "Enterprise AI governance", "Responsible AI implementation", "Strategic risk assessment"]
+      evidence: ["Initial contributor to CIBC&apos;s generative AI guidelines", "Enterprise AI governance", "Responsible AI implementation", "Strategic risk assessment"]
     }
   ];
 
@@ -153,7 +153,7 @@ export default function JobFitAnalysis() {
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-2xl font-semibold text-gray-900 mb-2">Job Fit Analysis</h1>
-        <p className="text-gray-600">Mapping Robert's experience to Glia AI Consultant requirements</p>
+        <p className="text-gray-600">Mapping Robert&apos;s experience to Glia AI Consultant requirements</p>
       </div>
 
       {/* Overall Match Score */}
@@ -232,7 +232,7 @@ export default function JobFitAnalysis() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="text-sm font-medium text-gray-900 mb-2">Robert's Experience</h4>
+                <h4 className="text-sm font-medium text-gray-900 mb-2">Robert&apos;s Experience</h4>
                 <p className="text-gray-700 text-sm">{req.robertsExperience}</p>
               </div>
 
@@ -270,7 +270,7 @@ export default function JobFitAnalysis() {
             <strong>Competitive Advantages:</strong>
             <ul className="mt-1 space-y-1">
               <li>• AI newsletter and YouTube channel</li>
-              <li>• Initial contributor to CIBC's AI guidelines</li>
+              <li>• Initial contributor to CIBC&apos;s AI guidelines</li>
               <li>• Construction technology platform delivery</li>
               <li>• Enterprise-level strategic thinking</li>
               <li>• Innovation and transformation focus</li>
