@@ -18,6 +18,7 @@ export default function VoiceInterface() {
   const [audioLevel, setAudioLevel] = useState(0);
   const [connectionStatus, setConnectionStatus] = useState<'disconnected' | 'connecting' | 'connected' | 'error'>('disconnected');
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [loadingStep, setLoadingStep] = useState('');
   
   const agentRef = useRef<RealtimeAgent | null>(null);
   const sessionRef = useRef<RealtimeSession | null>(null);
@@ -32,6 +33,23 @@ export default function VoiceInterface() {
 
   const getCandidateContext = async () => {
     try {
+      setLoadingStep('🔐 Securing connection...');
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      setLoadingStep('📋 Loading Robert\'s experience...');
+      await new Promise(resolve => setTimeout(resolve, 400));
+      
+      setLoadingStep('🎓 Gathering education details...');
+      await new Promise(resolve => setTimeout(resolve, 400));
+      
+      setLoadingStep('🏆 Collecting achievements...');
+      await new Promise(resolve => setTimeout(resolve, 400));
+      
+      setLoadingStep('💡 Analyzing key stories...');
+      await new Promise(resolve => setTimeout(resolve, 400));
+      
+      setLoadingStep('🧠 Preparing AI context...');
+      
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -101,22 +119,18 @@ export default function VoiceInterface() {
       console.log('Setting connection status to connecting');
       setConnectionStatus('connecting');
       setLoadingProgress(5);
+      setLoadingStep('🚀 Initializing voice assistant...');
       console.log('State set: connecting with 5% progress');
       
       // Force state update to ensure UI renders immediately
-      await new Promise(resolve => setTimeout(resolve, 50));
+      await new Promise(resolve => setTimeout(resolve, 100));
       
       // Clean up any existing session first but don't reset connection state
       await cleanupSession();
 
-      // Force a small delay to ensure UI updates
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      console.log('Setting loading progress to 10');
-      setLoadingProgress(10);
-      
       // Get ephemeral token
-      setLoadingProgress(20);
+      setLoadingProgress(15);
+      setLoadingStep('🔑 Getting secure access token...');
       const tokenResponse = await fetch('/api/realtime-token', {
         method: 'POST',
       });
@@ -132,11 +146,12 @@ export default function VoiceInterface() {
       }
 
       // Get candidate context for instructions
-      setLoadingProgress(40);
+      setLoadingProgress(25);
       const instructions = await getCandidateContext();
 
       // Create RealtimeAgent
-      setLoadingProgress(60);
+      setLoadingProgress(75);
+      setLoadingStep('🤖 Setting up AI assistant...');
       agentRef.current = new RealtimeAgent({
         name: 'Interview Assistant',
         instructions: instructions,
@@ -144,7 +159,8 @@ export default function VoiceInterface() {
       });
 
       // Create RealtimeSession with the agent
-      setLoadingProgress(80);
+      setLoadingProgress(85);
+      setLoadingStep('🎤 Establishing voice connection...');
       sessionRef.current = new RealtimeSession(agentRef.current);
 
       // Remove any existing listeners first to prevent duplicates

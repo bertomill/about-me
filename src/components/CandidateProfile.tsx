@@ -118,24 +118,32 @@ export default function CandidateProfile() {
       </div>
 
       {/* Section Navigation */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        {sections.map((section) => {
-          const Icon = section.icon;
-          return (
-            <button
-              key={section.id}
-              onClick={() => setActiveSection(section.id)}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                activeSection === section.id
-                  ? 'bg-green-100 text-green-700 border border-green-200'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-700'
-              }`}
-            >
-              <Icon size={16} />
-              <span>{section.label}</span>
-            </button>
-          );
-        })}
+      <div className="mb-6">
+        {/* Mobile: Horizontal scroll, Desktop: Wrap */}
+        <div className="flex overflow-x-auto scrollbar-hide gap-2 pb-2 sm:flex-wrap sm:overflow-x-visible">
+          {sections.map((section) => {
+            const Icon = section.icon;
+            return (
+              <button
+                key={section.id}
+                onClick={() => setActiveSection(section.id)}
+                className={`flex items-center space-x-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg transition-all duration-200 whitespace-nowrap min-w-fit mobile-tab ${
+                  activeSection === section.id
+                    ? 'bg-green-100 text-green-700 border border-green-200'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-700'
+                }`}
+              >
+                <Icon size={16} />
+                <span className="text-xs sm:text-sm font-medium">{section.label}</span>
+              </button>
+            );
+          })}
+        </div>
+        
+        {/* Mobile indicator for scrollable content */}
+        <div className="sm:hidden text-center mt-2">
+          <div className="text-xs text-gray-400">← Swipe to see all sections →</div>
+        </div>
       </div>
 
       {/* Content Sections */}

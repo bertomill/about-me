@@ -186,24 +186,32 @@ export default function JobFitAnalysis() {
       </div>
 
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-2">
-        {categories.map((category) => {
-          const Icon = category.icon;
-          return (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                activeCategory === category.id
-                  ? 'bg-green-100 text-green-700 border border-green-200'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              <Icon size={16} />
-              <span className="text-sm font-medium">{category.label}</span>
-            </button>
-          );
-        })}
+      <div className="mb-6">
+        {/* Mobile: Horizontal scroll, Desktop: Wrap */}
+        <div className="flex overflow-x-auto scrollbar-hide gap-2 pb-2 sm:flex-wrap sm:overflow-x-visible">
+          {categories.map((category) => {
+            const Icon = category.icon;
+            return (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`flex items-center space-x-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg transition-all duration-200 whitespace-nowrap min-w-fit mobile-tab ${
+                  activeCategory === category.id
+                    ? 'bg-green-100 text-green-700 border border-green-200'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <Icon size={16} />
+                <span className="text-xs sm:text-sm font-medium">{category.label}</span>
+              </button>
+            );
+          })}
+        </div>
+        
+        {/* Mobile indicator for scrollable content */}
+        <div className="sm:hidden text-center mt-2">
+          <div className="text-xs text-gray-400">← Swipe to see all categories →</div>
+        </div>
       </div>
 
       {/* Requirements Grid */}
