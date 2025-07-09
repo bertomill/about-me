@@ -1,0 +1,377 @@
+{
+  "personal": {
+    "name": "Robert Mill",
+    "currentRole": "Innovation Strategy Consultant",
+    "currentCompany": "CIBC",
+    "location": "Toronto, Ontario",
+    "email": "bertmill19@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/bertomill/"
+  },
+  "education": [
+    {
+      "degree": "Masters of Science (MSc), Digital Management",
+      "institution": "Ivey Business School",
+      "graduationYear": "2022",
+      "achievements": [
+        "Dean's honors list",
+        "2 time national champion football player during studies",
+        "Elected president of the Fintech club at Ivey Business School",
+        "Winner of the Ivey Design Innovation Studio competition"
+      ],
+      "relevantCoursework": [
+        "Digital Management (frameworks for adopting technology)",
+        "Prescriptive Analytics", 
+        "Design thinking"
+      ],
+      "whyChosen": "I did my undergraduate degree in business and was super fascinated in coding and web development, so I felt this was a great bridge between technology and business, without doing a full software engineering degree."
+    },
+    {
+      "degree": "Graduate Diploma (GDip) in Business & Sustainability",
+      "institution": "Ivey Business School",
+      "graduationYear": "2022",
+      "achievements": [
+        "Completed alongside MSc program"
+      ],
+      "relevantCoursework": [
+        "Business sustainability frameworks",
+        "Environmental strategy"
+      ],
+      "whyChosen": "Complemented my digital management studies with sustainability focus."
+    },
+    {
+      "degree": "Bachelors of Arts (BA), Business Management & Legal Studies",
+      "institution": "Western University",
+      "graduationYear": "2021",
+      "achievements": [
+        "2 time national champion football player during studies"
+      ],
+      "relevantCoursework": [
+        "Business Management",
+        "Legal Studies"
+      ],
+      "whyChosen": "Foundation in business with legal understanding to prepare for future career opportunities."
+    }
+  ],
+  "experience": [
+    {
+      "company": "CIBC",
+      "position": "Innovation Strategy Consultant",
+      "startDate": "August 2023",
+      "endDate": "Present",
+      "location": "Toronto, Ontario",
+      "magicQuestions": {
+        "howFoundJob": "Discovered this opportunity through the Ivey Design Innovation Studio, where CIBC was a key partner. During my final presentation, the Director of CIBC Innovation was impressed with my strategic analysis and directly recruited me to join the team.",
+        "whoHiredYou": "Director of CIBC Innovation",
+        "whatHiredToDo": "Hired as an Innovation Strategy Consultant to analyze market trends, assess emerging technologies, develop strategic recommendations for executive leadership, and drive AI maturity initiatives across the organization.",
+        "managerDescription": "My manager would describe my key strengths as being highly analytical with the ability to rapidly ingest complex information and synthesize it into clear, actionable strategic recommendations. They would highlight my strong communication skills and collaborative approach to cross-functional teamwork.",
+        "areasForGrowth": "Areas for development include deepening technical understanding of database systems and enhancing stakeholder management skills when working with diverse teams across different business units and understanding how to optimize my role in various organizational contexts.",
+        "biggestWin": "Led a transformational AI maturity initiative that elevated CIBC from #41 to the top 20 among global banks. Analyzed thousands of data points from industry benchmarking to develop a comprehensive strategic plan with 21 specific initiatives covering investment decisions, vendor partnerships, talent acquisition, and communications strategy. This work was featured in the CEO's annual report and quarterly earnings calls as one of the bank's key achievements.",
+        "toughestChallenge": "The most challenging aspect has been navigating complex organizational structures to identify the right stakeholders and drive action across multiple business units with different priorities and timelines.",
+        "whyLeft": "Transitioning to pursue new opportunities in technology strategy and database-focused roles."
+      },
+      "careerMove": {
+        "whyMadeMove": "This role represented an ideal opportunity to bridge my business strategy background with hands-on experience in technology innovation at a major financial institution, directly applying insights from my Digital Management education.",
+        "whatLearned": "Gained deep understanding of enterprise organizational dynamics, including how to navigate hierarchical structures, identify cost and revenue centers, and align strategic initiatives with stakeholder objectives to drive meaningful organizational change."
+      },
+      "accomplishments": [
+        "Spearheaded AI maturity transformation that moved CIBC from #41 to top 20 globally among banks",
+        "Developed and executed 21 strategic initiatives covering AI investments, vendor partnerships, and talent strategy",
+        "Created executive-level strategic recommendations that were featured in CEO communications",
+        "Built custom AI-powered tools for research analysis and competitor benchmarking"
+      ],
+      "challenges": [
+        "Navigated complex stakeholder environments across multiple business units",
+        "Synthesized massive datasets into actionable executive insights",
+        "Drove organizational change initiatives across traditional banking hierarchies"
+      ],
+      "exceptionalPerformance": [
+        "Project outcomes featured in CEO annual report and quarterly earnings calls",
+        "Direct recruitment by senior leadership based on presentation performance",
+        "Successfully influenced enterprise-level strategic decisions",
+        "Created innovative AI tools to enhance personal and team productivity"
+      ],
+      "skills": [
+        "Strategic consulting",
+        "Executive communication", 
+        "Complex data analysis and synthesis",
+        "Stakeholder management",
+        "AI strategy development",
+        "Competitive intelligence",
+        "Cross-functional team leadership"
+      ],
+      "technologies": [
+        "Google Vertex AI",
+        "Microsoft Azure",
+        "AI-powered research and analysis tools",
+        "Executive presentation platforms",
+        "Data visualization tools"
+      ]
+    },
+    {
+      "company": "Scelta Inc",
+      "position": "Software Integration Consultant",
+      "startDate": "September 2022",
+      "endDate": "June 2023",
+      "location": "London, Ontario",
+      "magicQuestions": {
+        "howFoundJob": "Found this opportunity through a personal connection with the founder, who I went to school with and is only a few years older than me. I was hired as one of the first 10 employees.",
+        "whoHiredYou": "Company founder",
+        "whatHiredToDo": "Hired to work directly with construction industry clients to understand their needs, map out their business processes, and lead digital transformation initiatives. Main focus was transitioning companies from paper-based systems to digital solutions using Google Cloud Platform, including payroll, project management, and inventory management systems.",
+        "managerDescription": "My manager described me as one of the most resourceful people he's ever met. He highlighted my ability to quickly identify and implement the right tools, AI solutions, or software for any given challenge, which often saved the team weeks of effort due to my knowledge of the latest technological tools.",
+        "areasForGrowth": "Key area for growth was improving internal documentation and process tracking. We needed better systems for documenting meetings, tracking our work, and creating processes for onboarding new employees as the team scaled.",
+        "biggestWin": "Successfully set up the entire team on Google Cloud Platform and created replicable solution templates. This transformation allowed us to scale from 5 customers to 20 customers without significant additional effort, moving from custom one-off solutions to standardized, duplicatable templates using Firebase and Google App Sheets.",
+        "toughestChallenge": "The biggest challenge was transitioning from completely customized solutions for each client to creating standardized, scalable templates while still meeting each company's unique needs in the construction industry.",
+        "whyLeft": "Left when recruited by CIBC for an Innovation Strategy Consultant role. It was a difficult decision as I loved the startup environment, but CIBC offered an opportunity to do similar AI consulting work at one of Canada's largest enterprises, which was an exciting new challenge."
+      },
+      "careerMove": {
+        "whyMadeMove": "I was passionate about technology transformation and helping legacy companies integrate technology to make their operations 10x more efficient and deliver 10x more value to their customers. I was attracted to the startup environment, fast-moving pace, direct customer interaction, and ability to build and iterate quickly.",
+        "whatLearned": "Gained deep experience in customer journey mapping, client relationship management, and scaling technology solutions. Learned how to identify and implement the most effective tools for specific business challenges, and how to transition from custom solutions to scalable, template-based approaches."
+      },
+      "accomplishments": [
+        "Scaled company from 5 to 20 customers by creating replicable solution templates",
+        "Successfully led digital transformation for construction companies, reducing project timelines from weeks to days",
+        "Implemented Google Cloud Platform infrastructure that enabled standardized, scalable solutions",
+        "Built comprehensive mobile and web applications for project management, inventory, and payroll systems"
+      ],
+      "challenges": [
+        "Transitioning legacy construction companies from paper-based to digital systems",
+        "Creating standardized solutions while meeting unique client requirements",
+        "Scaling team processes and documentation as the company grew rapidly"
+      ],
+      "exceptionalPerformance": [
+        "Hired as one of the first 10 employees due to founder's confidence in abilities",
+        "Recognized as 'most resourceful person' by management for tool selection and implementation",
+        "Achieved 4x customer growth through process innovation and template creation",
+        "Successfully balanced startup role while completing Master's degree"
+      ],
+      "skills": [
+        "Customer journey mapping",
+        "Client relationship management",
+        "Technology solution architecture",
+        "Digital transformation consulting",
+        "Sales and pitching",
+        "Cold outreach and email marketing",
+        "Process documentation and scaling"
+      ],
+      "technologies": [
+        "Google Cloud Platform",
+        "Firebase",
+        "Google App Sheets",
+        "React",
+        "React Native",
+        "HubSpot",
+        "Mobile app development"
+      ]
+    },
+    {
+      "company": "Sick Kids Hospital",
+      "position": "Integration Consultant (Summer Internship)",
+      "startDate": "May 2023",
+      "endDate": "August 2023",
+      "location": "Toronto, Ontario",
+      "magicQuestions": {
+        "howFoundJob": "Found this opportunity through the Ivey Masters program job board, where internships are recommended to students. Applied and was selected for a 4-month consulting engagement.",
+        "whoHiredYou": "Sick Kids Hospital hiring manager",
+        "whatHiredToDo": "Hired to conduct process mining and analysis of their Electronic Health Record (EHR) system. Primary responsibility was to understand current hospital processes and identify opportunities to implement technology solutions that would improve convenience and efficiency for both patients and healthcare professionals.",
+        "managerDescription": "Our manager was extremely pleased with the diligent and in-depth nature of our analysis. They highlighted our thoroughness in going through painstaking detail to examine every single process in the physician's journey and our ability to identify areas where physicians were experiencing burnout and where AI solutions could provide relief.",
+        "areasForGrowth": "Key area for growth was developing faster domain expertise in healthcare. I could have spent more time understanding the healthcare industry background before diving into the analysis, which would have provided better context for the recommendations.",
+        "biggestWin": "Successfully recommended and influenced the implementation of an AI-powered note-taking system for physicians. We provided detailed analysis of vendor options, and the hospital chose Dragon Notes (Microsoft partnership) for recording patient interactions. While not solely credited to our work, our recommendation was a major factor in their decision.",
+        "toughestChallenge": "The biggest challenges were accessing the necessary data for our analysis and understanding the complex hospital system operations - how patients, staff, and processes move through the facility. Getting first-person experience of the healthcare environment was initially difficult.",
+        "whyLeft": "The summer internship concluded at the end of August. While Sick Kids offered us the opportunity to continue, I had already committed to starting my role at CIBC and was excited about that new opportunity."
+      },
+      "careerMove": {
+        "whyMadeMove": "This was my summer internship during my master's program. I was interested in applying my digital management and process optimization skills to the healthcare sector, which presented unique challenges in technology integration.",
+        "whatLearned": "Learned that healthcare technology implementation is significantly more complex than other industries due to multiple stakeholders, regulatory requirements, and interconnected services. Gained experience in healthcare process analysis and understanding the critical importance of physician workflow optimization."
+      },
+      "accomplishments": [
+        "Conducted comprehensive process mining analysis of hospital EHR systems",
+        "Identified key areas of physician burnout and inefficiency in patient care workflows",
+        "Successfully recommended AI note-taking solution that was implemented by the hospital",
+        "Provided detailed vendor analysis and implementation recommendations"
+      ],
+      "challenges": [
+        "Navigating complex healthcare data access requirements",
+        "Understanding intricate hospital operational processes and stakeholder relationships",
+        "Learning healthcare domain expertise quickly to provide meaningful recommendations"
+      ],
+      "exceptionalPerformance": [
+        "Received exceptional feedback for thoroughness and attention to detail in process analysis",
+        "Recommended solution was actually implemented by the hospital",
+        "Offered opportunity to continue engagement beyond internship period",
+        "Successfully analyzed complex healthcare workflows with limited domain background"
+      ],
+      "skills": [
+        "Healthcare process analysis",
+        "Customer journey mapping",
+        "Process mining",
+        "Technology vendor evaluation",
+        "Stakeholder analysis",
+        "Healthcare workflow optimization",
+        "AI solution recommendation"
+      ],
+      "technologies": [
+        "Electronic Health Record (EHR) systems",
+        "Process mapping tools",
+        "Microsoft Excel for analysis",
+        "Dragon Notes (AI transcription)",
+        "Healthcare process frameworks"
+      ]
+    },
+    {
+      "company": "CIBC Wood Gundy Private Wealth",
+      "position": "Customer Service Associate",
+      "startDate": "January 2022",
+      "endDate": "August 2022",
+      "location": "London, Ontario",
+      "magicQuestions": {
+        "howFoundJob": "Found this opportunity through my football coach from undergrad, who invited me to join his wealth management team as a customer service associate. This aligned perfectly with my interest in finance and customer service.",
+        "whoHiredYou": "Football coach who was also a wealth manager",
+        "whatHiredToDo": "Hired to serve as a wealth manager's assistant, providing comprehensive customer support including answering client questions, conducting marketing initiatives, understanding customer needs, and consulting clients on their financial futures. Responsibilities included teaching clients about financial planning, creating detailed financial plans and projections, and providing data-driven portfolio recommendations.",
+        "managerDescription": "My manager would describe me as very professional, kind, and caring. He would highlight my excellence in customer relations, diligent work ethic, strong communication skills, reliability in always showing up on time, and consistently delivering high-quality work.",
+        "areasForGrowth": "Key area for growth was developing deeper industry expertise in wealth management. Building an intuitive understanding of customer pain points and concerns was important, especially given the sensitive nature of financial planning and the emotional aspects of managing personal wealth.",
+        "biggestWin": "Led a comprehensive marketing campaign that included flyers, digital advertising, and offering free upfront financial plans to prospective clients. This campaign successfully grew our client portfolio by 20%, adding 10 new clients to our existing base of 50 clients within one year.",
+        "toughestChallenge": "The most challenging aspect was supporting customers during market downturns when they were worried and wanted to withdraw their investments. This required explaining market dynamics in a matter-of-fact, reassuring tone while providing clear guidance on long-term financial strategies.",
+        "whyLeft": "Left to begin my master's program as I wanted to focus more on the technology implementation side of finance rather than purely traditional wealth management. I was interested in exploring how technology could transform the financial services industry."
+      },
+      "careerMove": {
+        "whyMadeMove": "I was passionate about finance and wanted to gain hands-on experience in the industry. This role offered an excellent first step into a finance career while working with someone I respected and who knew me well through our football connection.",
+        "whatLearned": "Gained comprehensive understanding of client relationship management in financial services, learned how to communicate complex financial concepts to non-expert clients, and developed skills in creating data-driven recommendations for sensitive financial decisions."
+      },
+      "accomplishments": [
+        "Successfully grew client portfolio by 20% through comprehensive marketing campaign",
+        "Created detailed financial plans and projections for numerous clients",
+        "Provided data-driven portfolio recommendations that helped clients achieve their financial goals",
+        "Developed and executed successful digital and traditional marketing initiatives"
+      ],
+      "challenges": [
+        "Managing client relationships during volatile market conditions",
+        "Explaining complex financial concepts to clients with varying levels of financial literacy",
+        "Building trust and confidence with clients regarding sensitive financial decisions"
+      ],
+      "exceptionalPerformance": [
+        "Recommended by football coach based on character and work ethic",
+        "Successfully managed client relationships while completing undergraduate studies",
+        "Delivered measurable results through marketing campaign (20% client growth)",
+        "Maintained high client satisfaction during challenging market conditions"
+      ],
+      "skills": [
+        "Customer relationship management",
+        "Financial planning and analysis",
+        "Data-driven consulting",
+        "Client education and training",
+        "Marketing campaign development",
+        "Financial projections and modeling",
+        "Customer service excellence"
+      ],
+      "technologies": [
+        "Goal Planner software",
+        "Microsoft Excel (advanced functions)",
+        "Morningstar Direct",
+        "HTML",
+        "CSS",
+        "Company website management",
+        "Digital advertising platforms"
+      ]
+    }
+  ],
+  "keyStories": [
+    {
+      "title": "Transforming CIBC's AI Maturity Ranking",
+      "situation": "CIBC was ranked #41 out of 50 banks globally in AI maturity, while all Canadian peers were in the top 20. This was a significant competitive disadvantage and strategic concern for the bank's leadership.",
+      "task": "As an Innovation Strategy Consultant, I was tasked with analyzing thousands of data points from the AI maturity index to understand what separated high-performing banks from lower-ranked ones, and develop a comprehensive strategy to move CIBC into the top 20.",
+      "action": "I ingested and analyzed massive datasets from the AI maturity index, mapping out investment patterns, vendor partnerships, hiring strategies, and communication approaches of top-performing banks. I then created a detailed strategic plan with 21 specific initiatives covering AI investments, vendor partnerships, talent acquisition, and marketing campaigns. I presented these recommendations directly to our CIO and CTO with clear implementation timelines and success metrics.",
+      "result": "CIBC successfully moved from #41 to the top 20 globally in AI maturity rankings. The strategy was so impactful that our CEO announced it in the annual report and featured it in multiple quarterly earnings calls as one of the bank's greatest achievements that year.",
+      "learned": "I learned how to synthesize complex data into executive-level strategic recommendations and the importance of creating comprehensive, actionable plans that address multiple dimensions of organizational change. This experience taught me how AI strategy requires alignment across technology, talent, partnerships, and communications.",
+      "tags": ["AI strategy", "executive communication", "data analysis", "strategic planning", "organizational transformation"]
+    },
+    {
+      "title": "Scaling Scelta from 5 to 20 Customers Through Template Innovation",
+      "situation": "Scelta Inc was struggling to scale because every client solution was completely customized and one-off. This created massive inefficiencies, with each implementation taking weeks and requiring extensive custom development for construction companies transitioning from paper-based systems.",
+      "task": "As a Software Integration Consultant, I needed to find a way to standardize our solutions while still meeting each construction company's unique operational needs, and help the company scale more efficiently.",
+      "action": "I implemented Google Cloud Platform across the entire team and created replicable solution templates using Firebase and Google App Sheets. I developed standardized mobile and web applications for project management, inventory, and payroll that could be quickly customized and deployed. I also documented processes and created onboarding templates for new clients.",
+      "result": "We scaled from 5 customers to 20 customers (300% growth) without significant additional development effort. Project timelines were reduced from weeks to days, and we established a sustainable growth model for the company.",
+      "learned": "I learned the importance of creating scalable, template-based solutions in SaaS environments and how standardization can drive exponential growth. This experience taught me to balance customization with efficiency and the value of process documentation for scaling teams.",
+      "tags": ["SaaS scaling", "process optimization", "customer success", "template development", "growth strategy"]
+    },
+    {
+      "title": "Implementing AI Solution at Sick Kids Hospital",
+      "situation": "Sick Kids Hospital was experiencing physician burnout and inefficiencies in their Electronic Health Record (EHR) system. Physicians were spending excessive time on documentation rather than patient care, and the hospital needed technology solutions to improve workflow efficiency.",
+      "task": "During my summer internship, I was responsible for conducting comprehensive process mining of their EHR system and identifying opportunities for AI-powered improvements to reduce physician workload and improve patient care efficiency.",
+      "action": "I conducted detailed analysis of every step in the physician's journey, mapping pain points and identifying areas where AI could provide relief. I researched and evaluated multiple AI note-taking vendors, providing detailed recommendations with implementation considerations. I presented our findings with specific vendor comparisons and business case analysis.",
+      "result": "The hospital implemented our recommended AI-powered note-taking system (Dragon Notes with Microsoft partnership). While not solely credited to our work, our analysis was a major factor in their decision. The hospital also offered us an extended engagement, demonstrating the value of our recommendations.",
+      "learned": "I learned how to quickly develop domain expertise in complex industries like healthcare, and the importance of thorough stakeholder analysis when implementing technology in regulated environments. This taught me how AI implementation requires understanding both technical capabilities and organizational constraints.",
+      "tags": ["AI implementation", "healthcare technology", "process mining", "vendor evaluation", "stakeholder management"]
+    },
+    {
+      "title": "Growing Wood Gundy Client Portfolio by 20%",
+      "situation": "The Wood Gundy wealth management team had a stable client base of 50 clients but needed to grow to meet business objectives. The challenge was attracting new clients in a competitive wealth management market while maintaining service quality for existing clients.",
+      "task": "As a Customer Service Associate, I was tasked with developing and executing a marketing campaign to attract new clients while supporting existing client relationships and financial planning needs.",
+      "action": "I designed and executed a comprehensive marketing campaign that included traditional flyers, digital advertising, and a strategic offer of free upfront financial plans for prospective clients. I created detailed financial projections and plans for prospects, demonstrating value before asking for commitment. I also maintained excellent relationships with existing clients, ensuring retention during the growth phase.",
+      "result": "Successfully added 10 new clients to our base of 50, achieving 20% portfolio growth within one year. The free financial planning strategy proved highly effective in converting prospects to clients.",
+      "learned": "I learned the importance of demonstrating value upfront in financial services and how effective marketing combines multiple channels. This experience taught me how to balance acquisition and retention in customer-facing roles.",
+      "tags": ["customer acquisition", "marketing strategy", "financial services", "client relationship management", "growth tactics"]
+    }
+  ],
+  "strengths": [
+    "AI Strategy & Implementation - Led CIBC's transformation from #41 to top 20 globally in AI maturity through comprehensive strategic planning and execution",
+    "Customer-Facing Consulting - 4+ years of direct client interaction across finance, healthcare, and technology sectors, with proven ability to understand complex needs and deliver solutions",
+    "Process Optimization & Scaling - Scaled Scelta from 5 to 20 customers through innovative template-based solutions, reducing implementation time from weeks to days",
+    "Cross-Functional Collaboration - Successfully worked with C-level executives, product teams, engineers, and diverse stakeholders across multiple industries",
+    "Data-Driven Decision Making - Consistently analyzed complex datasets to provide actionable recommendations, from AI maturity indices to financial planning models",
+    "Technology Resourcefulness - Recognized as 'most resourceful person' at Scelta for quickly identifying and implementing optimal tools and AI solutions for business challenges",
+    "Rapid Domain Learning - Successfully adapted to healthcare (Sick Kids), construction (Scelta), and banking (CIBC) industries, quickly developing expertise in complex domains"
+  ],
+  "growthAreas": [
+    "Technical Database Expertise - Currently developing deeper understanding of database systems and technical infrastructure to complement strategic consulting skills",
+    "Healthcare Industry Depth - Building more comprehensive domain knowledge in healthcare technology and regulatory environments",
+    "Advanced Stakeholder Management - Continuously improving skills in managing complex organizational dynamics and driving change across multiple business units",
+    "Process Documentation - Enhancing systematic documentation practices for better knowledge transfer and team scaling as organizations grow"
+  ],
+  "awards": [
+    {
+      "title": "Dean's Honors List",
+      "organization": "Ivey Business School",
+      "year": "2022",
+      "description": "Academic excellence during Master's of Science in Digital Management program"
+    },
+    {
+      "title": "2-Time National Champion",
+      "organization": "Canadian University Football",
+      "year": "2020-2021",
+      "description": "National championship victories while maintaining academic excellence at Western University"
+    },
+    {
+      "title": "President of Fintech Club",
+      "organization": "Ivey Business School",
+      "year": "2022",
+      "description": "Elected to lead the Fintech club, organizing events and initiatives related to financial technology"
+    },
+    {
+      "title": "Winner - Ivey Design Innovation Studio Competition",
+      "organization": "Ivey Business School",
+      "year": "2022",
+      "description": "Won design thinking competition working with CIBC as partner organization, leading to direct recruitment"
+    },
+    {
+      "title": "CEO Annual Report Recognition",
+      "organization": "CIBC",
+      "year": "2023",
+      "description": "AI maturity transformation project featured in CEO's annual report and quarterly earnings calls as key bank achievement"
+    }
+  ],
+  "questionsForInterviewer": [
+    "Questions you might ask about the company/role",
+    "Questions about team culture",
+    "Questions about growth opportunities"
+  ],
+  "interviewMetadata": {
+    "lastUpdated": "2024-01-01",
+    "version": "1.0",
+    "completionStatus": {
+      "education": false,
+      "experience": false,
+      "stories": false,
+      "questions": false
+    }
+  }
+}
