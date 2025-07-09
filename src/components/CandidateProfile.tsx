@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { User, MapPin, Mail, Linkedin, GraduationCap, Briefcase, Award, Target, Lightbulb, MessageCircle, ChevronDown, ChevronRight, Youtube, Twitter, FileText } from 'lucide-react';
 
 interface PersonalInfo {
@@ -153,9 +154,11 @@ export default function CandidateProfile() {
       {/* Header */}
       <div className="flex items-center space-x-4 mb-8">
         <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-green-200">
-          <img 
-            src="/robert-headshot.png" 
+          <Image 
+            src="/Robert-Headshot.png" 
             alt="Robert Mill" 
+            width={80}
+            height={80}
             className="w-full h-full object-cover"
           />
         </div>

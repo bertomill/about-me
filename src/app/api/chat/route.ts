@@ -3,40 +3,48 @@ import OpenAI from 'openai';
 import { Anthropic } from '@anthropic-ai/sdk';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Define proper types for database entities to avoid any types
-// These interfaces match the structure of data from our Supabase database
-interface DatabaseEducation {
+// Define proper types for candidate data structure
+interface Education {
   degree: string;
   institution: string;
-  graduation_year: string;
+  graduationYear: string;
   achievements?: string[];
-  relevant_coursework?: string[];
-  why_chosen: string;
+  relevantCoursework?: string[];
+  whyChosen: string;
 }
 
-interface DatabaseExperience {
+interface Experience {
   position: string;
   company: string;
-  start_date: string;
-  end_date: string;
+  startDate: string;
+  endDate: string;
   location: string;
-  how_found_job: string;
-  what_hired_to_do: string;
-  manager_description: string;
-  biggest_win: string;
-  toughest_challenge: string;
-  why_made_move: string;
-  what_learned: string;
+  magicQuestions?: {
+    howFoundJob?: string;
+    whatHiredToDo?: string;
+    managerDescription?: string;
+    biggestWin?: string;
+    toughestChallenge?: string;
+  };
+  careerMove?: {
+    whyMadeMove?: string;
+    whatLearned?: string;
+  };
   accomplishments?: string[];
   skills?: string[];
   technologies?: string[];
 }
 
-interface DatabaseStrength {
-  strength: string;
+interface Strength {
+  title: string;
+  summary: string;
+  details: string;
+  metrics?: string[];
+  technologies?: string[];
+  impact: string;
 }
 
-interface DatabaseStory {
+interface Story {
   title: string;
   situation: string;
   task: string;
@@ -44,6 +52,20 @@ interface DatabaseStory {
   result: string;
   learned: string;
   tags?: string[];
+}
+
+// Type for message objects
+interface Message {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+}
+
+// Type for API errors
+interface APIError {
+  error?: {
+    type?: string;
+  };
+  status?: number;
 }
 
 const openai = new OpenAI({
@@ -79,7 +101,7 @@ PERSONAL INFO:
 
 EDUCATION:`;
 
-    education.forEach((edu: any) => {
+    education.forEach((edu: Education) => {
       context += `
 - ${edu.degree} from ${edu.institution} (${edu.graduationYear})
   Key achievements: ${edu.achievements?.slice(0, 2).join(', ')}`;
@@ -89,7 +111,7 @@ EDUCATION:`;
 
 WORK EXPERIENCE:`;
 
-    experience.forEach((exp: any) => {
+    experience.forEach((exp: Experience) => {
       context += `
 - ${exp.position} at ${exp.company} (${exp.startDate} - ${exp.endDate})
   Biggest Win: ${exp.magicQuestions?.biggestWin}
@@ -100,16 +122,13 @@ WORK EXPERIENCE:`;
     context += `
 
 CORE STRENGTHS:`;
-    strengths.forEach((strength: any) => {
+    strengths.forEach((strength: Strength | string) => {
       if (typeof strength === 'string') {
         context += `
 - ${strength}`;
       } else {
         context += `
 - ${strength.title}: ${strength.summary}
-  Details: ${strength.details}
-  Key Metrics: ${strength.metrics?.join(', ')}
-  Technologies: ${strength.technologies?.join(', ')}
   Impact: ${strength.impact}`;
       }
     });
@@ -117,15 +136,11 @@ CORE STRENGTHS:`;
     context += `
 
 KEY STORIES:`;
-    stories.forEach((story: any) => {
+    stories.slice(0, 3).forEach((story: Story) => {
       context += `
 - ${story.title}
-  Situation: ${story.situation}
-  Task: ${story.task}
-  Action: ${story.action}
   Result: ${story.result}
-  Learned: ${story.learned}
-  Tags: ${story.tags?.join(', ')}`;
+  Impact: ${story.learned}`;
     });
 
     context += `
@@ -168,9 +183,10 @@ export async function POST(req: NextRequest) {
           ],
           stream: true,
         });
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const apiError = error as APIError;
         // Handle Claude API errors before streaming
-        if (error.error?.type === 'overloaded_error') {
+        if (apiError.error?.type === 'overloaded_error') {
           const errorMessage = "Claude is currently experiencing high demand. Please try again in a moment or switch to GPT-4 or Gemini.";
           const encoder = new TextEncoder();
           const errorStream = new ReadableStream({
@@ -208,11 +224,12 @@ export async function POST(req: NextRequest) {
             }
             controller.enqueue(encoder.encode('data: [DONE]\n\n'));
             controller.close();
-          } catch (error: any) {
+          } catch (error: unknown) {
+            const apiError = error as APIError;
             console.error('Claude streaming error:', error);
             
             // Handle specific Claude errors
-            if (error.error?.type === 'overloaded_error') {
+            if (apiError.error?.type === 'overloaded_error') {
               const errorMessage = "Claude is currently experiencing high demand. Please try again in a moment or switch to GPT-4 or Gemini.";
               controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: errorMessage })}\n\n`));
             } else {
@@ -245,7 +262,7 @@ export async function POST(req: NextRequest) {
       const geminiModel = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
       
       // Format conversation for Gemini
-      const conversationHistory = messages.map((msg: any) => ({
+      const conversationHistory = messages.map((msg: Message) => ({
         role: msg.role === 'user' ? 'user' : 'model',
         parts: [{ text: msg.content }],
       }));
@@ -275,11 +292,12 @@ export async function POST(req: NextRequest) {
               }
               controller.enqueue(encoder.encode('data: [DONE]\n\n'));
               controller.close();
-            } catch (error: any) {
+            } catch (error: unknown) {
+              const apiError = error as APIError;
               console.error('Gemini streaming error:', error);
               
               // Handle specific Gemini errors
-              if (error.status === 429) {
+              if (apiError.status === 429) {
                 const errorMessage = "Gemini has exceeded its rate limit. Please try again later or switch to GPT-4 or Claude.";
                 controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: errorMessage })}\n\n`));
               } else {
@@ -301,9 +319,10 @@ export async function POST(req: NextRequest) {
           },
         });
         
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const apiError = error as APIError;
         // Handle Gemini API errors before streaming
-        if (error.status === 429) {
+        if (apiError.status === 429) {
           const errorMessage = "Gemini has exceeded its rate limit. Please try again later or switch to GPT-4 or Claude.";
           const encoder = new TextEncoder();
           const errorStream = new ReadableStream({

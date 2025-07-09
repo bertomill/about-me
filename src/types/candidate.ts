@@ -77,12 +77,21 @@ export interface InterviewMetadata {
   completionStatus: CompletionStatus;
 }
 
+export interface Strength {
+  title: string;
+  summary: string;
+  details: string;
+  metrics: string[];
+  technologies: string[];
+  impact: string;
+}
+
 export interface CandidateInfo {
   personal: PersonalInfo;
   education: Education[];
   experience: Experience[];
   keyStories: KeyStory[];
-  strengths: string[];
+  strengths: Strength[];
   growthAreas: string[];
   awards: Award[];
   questionsForInterviewer: string[];
