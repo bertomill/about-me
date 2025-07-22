@@ -16,6 +16,7 @@ interface Experience {
 interface Value {
   title: string;
   shortDescription: string;
+  description: string;
 }
 
 interface SituationScenario {
@@ -75,7 +76,7 @@ RECENT EXPERIENCE:`;
     context += `
 
 CORE VALUES:`;
-    values.slice(0, 4).forEach((value: Value) => {
+    values.forEach((value: Value) => {
       context += `
 • ${value.title}: ${value.shortDescription}`;
     });

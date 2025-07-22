@@ -27,10 +27,16 @@ interface Strength {
 interface Value {
   title: string;
   shortDescription: string;
+  description: string;
+  principles?: string[];
 }
 
 interface ValueExperience {
   title: string;
+  valueId: string;
+  company: string;
+  situation: string;
+  action: string;
   impact: string;
 }
 
@@ -95,11 +101,12 @@ EXPERIENCE:`;
 
     context += `
 
-CORE VALUES:`;
-    // Include values but keep descriptions short
-    values.slice(0, 4).forEach((value: Value) => {
+CORE VALUES (CHAMPR Framework):`;
+    // Include all 8 values with both short and full descriptions for comprehensive AI responses
+    values.forEach((value: Value) => {
       context += `
-• ${value.title}: ${value.shortDescription}`;
+• ${value.title}: ${value.shortDescription}
+  Full: ${value.description?.slice(0, 120)}...`;
     });
 
     context += `
@@ -129,10 +136,11 @@ STRENGTHS:`;
     context += `
 
 VALUE EXPERIENCES:`;
-    // Include a few key value-driven experiences
-    valueExperiences.slice(0, 3).forEach((exp: ValueExperience) => {
+    // Include more value-driven experiences to show how values are demonstrated
+    valueExperiences.slice(0, 6).forEach((exp: ValueExperience) => {
       context += `
-• ${exp.title}: ${exp.impact}`;
+• ${exp.title} (${exp.company})
+  Value: ${exp.valueId} - ${exp.impact}`;
     });
 
     context += `
