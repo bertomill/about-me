@@ -78,74 +78,79 @@ const anthropic = new Anthropic({
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || '');
 
-// Function to get candidate context from JSON file
+// Function to get candidate context from JSON file (OPTIMIZED for performance and token efficiency)
 async function getCandidateContext() {
   try {
     // Import candidate data from JSON file
     const candidateData = await import('@/data/candidate-info.json');
     
     const personal = candidateData.personal;
-    const education = candidateData.education || [];
     const experience = candidateData.experience || [];
     const strengths = candidateData.strengths || [];
-    const stories = candidateData.keyStories || [];
+    const values = candidateData.values || [];
+    const valueExperiences = candidateData.valueExperiences || [];
+    const situationScenarios = candidateData.situationScenarios || [];
 
-    // Format the context for AI models (optimized for better performance)
-    let context = `You are an AI assistant helping interviewers learn about Robert Mill. Here's key information about him:
+    // OPTIMIZED CONTEXT - Reduced tokens while maintaining key information
+    let context = `You are Robert Mill's AI assistant for interview preparation. Answer questions about Robert using this data:
 
-PERSONAL INFO:
-- Name: ${personal?.name}
-- Role: ${personal?.currentRole} at ${personal?.currentCompany}
-- Location: ${personal?.location}
-- Links: LinkedIn, YouTube, Newsletter, Twitter
+PERSONAL: ${personal?.name}, ${personal?.currentRole} at ${personal?.currentCompany}, ${personal?.location}
 
-EDUCATION:`;
+EXPERIENCE:`;
 
-    education.forEach((edu: Education) => {
+    // Limit to top 3 most recent experiences to reduce tokens
+    experience.slice(0, 3).forEach((exp: Experience) => {
       context += `
-- ${edu.degree} from ${edu.institution} (${edu.graduationYear})
-  Key achievements: ${edu.achievements?.slice(0, 2).join(', ')}`;
+• ${exp.position} at ${exp.company} (${exp.startDate}-${exp.endDate})
+  Win: ${exp.magicQuestions?.biggestWin?.slice(0, 100)}...
+  Challenge: ${exp.magicQuestions?.toughestChallenge?.slice(0, 100)}...`;
     });
 
     context += `
 
-WORK EXPERIENCE:`;
-
-    experience.forEach((exp: Experience) => {
+CORE VALUES:`;
+    // Include values but keep descriptions short
+    values.slice(0, 4).forEach((value: any) => {
       context += `
-- ${exp.position} at ${exp.company} (${exp.startDate} - ${exp.endDate})
-  Biggest Win: ${exp.magicQuestions?.biggestWin}
-  Key Skills: ${exp.skills?.slice(0, 3).join(', ')}
-  Technologies: ${exp.technologies?.slice(0, 3).join(', ')}`;
+• ${value.title}: ${value.shortDescription}`;
     });
 
     context += `
 
-CORE STRENGTHS:`;
-    strengths.forEach((strength: Strength | string) => {
+BEHAVIORAL SCENARIOS:`;
+    // Include key behavioral scenarios for interview prep
+    situationScenarios.forEach((scenario: any) => {
+      context += `
+• ${scenario.title} (${scenario.categoryId})
+  Situation: ${scenario.situation.slice(0, 150)}...
+  Result: ${scenario.result.slice(0, 150)}...`;
+    });
+
+    context += `
+
+STRENGTHS:`;
+    strengths.slice(0, 4).forEach((strength: Strength | string) => {
       if (typeof strength === 'string') {
         context += `
-- ${strength}`;
+• ${strength}`;
       } else {
         context += `
-- ${strength.title}: ${strength.summary}
-  Impact: ${strength.impact}`;
+• ${strength.title}: ${strength.summary.slice(0, 100)}...`;
       }
     });
 
     context += `
 
-KEY STORIES:`;
-    stories.slice(0, 3).forEach((story: Story) => {
+VALUE EXPERIENCES:`;
+    // Include a few key value-driven experiences
+    valueExperiences.slice(0, 3).forEach((exp: any) => {
       context += `
-- ${story.title}
-  Result: ${story.result}
-  Impact: ${story.learned}`;
+• ${exp.title}: ${exp.impact}`;
     });
 
     context += `
 
-Please answer questions about Robert in a helpful, informative way. Be specific and use examples from his experience. If asked about specific roles, accomplishments, or skills, reference the detailed information above.`;
+Instructions: Answer questions about Robert's background, experience, values, and behavioral examples. Use specific examples and maintain a professional, helpful tone. For behavioral questions, reference the scenarios above.`;
 
     return context;
   } catch (error) {
