@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AlertTriangle, Users, TrendingDown, Clock, Shield, Target, CheckCircle, Briefcase, Calendar, ChevronRight, Star, Brain } from 'lucide-react';
+import { AlertTriangle, Users, TrendingDown, Clock, Shield, Target, CheckCircle, Briefcase, Calendar, Star, Brain, Lightbulb } from 'lucide-react';
 
 // Import your real candidate data
 import candidateData from '@/data/candidate-info.json';
@@ -48,6 +48,7 @@ export default function SituationAnalysis() {
       'shield': Shield,
       'target': Target,
       'brain': Brain,
+      'lightbulb': Lightbulb,
       'star': Star
     };
     return iconMap[iconName as keyof typeof iconMap] || Star;

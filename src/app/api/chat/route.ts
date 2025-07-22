@@ -4,35 +4,15 @@ import { Anthropic } from '@anthropic-ai/sdk';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Define proper types for candidate data structure
-interface Education {
-  degree: string;
-  institution: string;
-  graduationYear: string;
-  achievements?: string[];
-  relevantCoursework?: string[];
-  whyChosen: string;
-}
-
 interface Experience {
   position: string;
   company: string;
   startDate: string;
   endDate: string;
-  location: string;
   magicQuestions?: {
-    howFoundJob?: string;
-    whatHiredToDo?: string;
-    managerDescription?: string;
     biggestWin?: string;
     toughestChallenge?: string;
   };
-  careerMove?: {
-    whyMadeMove?: string;
-    whatLearned?: string;
-  };
-  accomplishments?: string[];
-  skills?: string[];
-  technologies?: string[];
 }
 
 interface Strength {
@@ -44,14 +24,21 @@ interface Strength {
   impact: string;
 }
 
-interface Story {
+interface Value {
   title: string;
+  shortDescription: string;
+}
+
+interface ValueExperience {
+  title: string;
+  impact: string;
+}
+
+interface SituationScenario {
+  title: string;
+  categoryId: string;
   situation: string;
-  task: string;
-  action: string;
   result: string;
-  learned: string;
-  tags?: string[];
 }
 
 // Type for message objects
@@ -110,7 +97,7 @@ EXPERIENCE:`;
 
 CORE VALUES:`;
     // Include values but keep descriptions short
-    values.slice(0, 4).forEach((value: any) => {
+    values.slice(0, 4).forEach((value: Value) => {
       context += `
 • ${value.title}: ${value.shortDescription}`;
     });
@@ -119,7 +106,7 @@ CORE VALUES:`;
 
 BEHAVIORAL SCENARIOS:`;
     // Include key behavioral scenarios for interview prep
-    situationScenarios.forEach((scenario: any) => {
+    situationScenarios.forEach((scenario: SituationScenario) => {
       context += `
 • ${scenario.title} (${scenario.categoryId})
   Situation: ${scenario.situation.slice(0, 150)}...
@@ -143,7 +130,7 @@ STRENGTHS:`;
 
 VALUE EXPERIENCES:`;
     // Include a few key value-driven experiences
-    valueExperiences.slice(0, 3).forEach((exp: any) => {
+    valueExperiences.slice(0, 3).forEach((exp: ValueExperience) => {
       context += `
 • ${exp.title}: ${exp.impact}`;
     });

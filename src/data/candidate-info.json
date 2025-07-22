@@ -528,6 +528,13 @@
       "color": "from-emerald-500 to-green-600"
     },
     {
+      "id": "leadership-initiative",
+      "title": "Leadership & Initiative",
+      "description": "Leading projects and driving results without formal authority",
+      "icon": "target",
+      "color": "from-indigo-500 to-blue-600"
+    },
+    {
       "id": "failure-learning",
       "title": "Failure & Learning",
       "description": "Learning from setbacks and developing resilience",
