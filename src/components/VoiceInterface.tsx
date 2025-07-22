@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Phone, PhoneOff, Loader, User, Bot, Volume2 } from 'lucide-react';
+import { Phone, PhoneOff, Loader, User, Bot, Volume2, ChevronDown } from 'lucide-react';
 import { RealtimeAgent, RealtimeSession } from '@openai/agents/realtime';
 
 interface VoiceMessage {
@@ -9,6 +9,100 @@ interface VoiceMessage {
   content: string;
   timestamp: Date;
 }
+
+interface QuestionCategory {
+  id: string;
+  name: string;
+  icon: string;
+  questions: string[];
+}
+
+const QUESTION_CATEGORIES: QuestionCategory[] = [
+  {
+    id: 'all',
+    name: 'All Questions',
+    icon: '💡',
+    questions: []
+  },
+  {
+    id: 'experience',
+    name: 'Experience & Background',
+    icon: '💼',
+    questions: [
+      "Tell me about Robert's experience with AI and machine learning",
+      "What was Robert's biggest achievement at CIBC?",
+      "How did Robert scale Scelta from 5 to 20 customers?",
+      "What was Robert's role at Sick Kids Hospital?",
+      "Describe Robert's consulting experience across different industries",
+      "How has Robert's background in football influenced his work style?"
+    ]
+  },
+  {
+    id: 'values',
+    name: 'Values & Leadership',
+    icon: '⭐',
+    questions: [
+      "What are Robert's core values and how does he demonstrate them?",
+      "Describe Robert's leadership style and experience",
+      "How does Robert approach collaboration and teamwork?",
+      "What does 'Customer-Centric' mean to Robert?",
+      "Tell me about Robert's 'Resourceful' value with examples",
+      "How does Robert balance 'Challenge' and 'Persevere' in his work?"
+    ]
+  },
+  {
+    id: 'behavioral',
+    name: 'Behavioral Scenarios',
+    icon: '🎯',
+    questions: [
+      "Tell me about a time Robert handled a crisis or system failure",
+      "Describe a situation where Robert had to build consensus among stakeholders",
+      "How did Robert make the difficult decision to leave Scelta for CIBC?",
+      "Give me an example of Robert leading without formal authority",
+      "What's a time Robert failed and what did he learn from it?",
+      "How does Robert approach problem-solving in complex situations?"
+    ]
+  },
+  {
+    id: 'technical',
+    name: 'Technical Skills',
+    icon: '🚀',
+    questions: [
+      "What makes Robert a good fit for an AI consultant role?",
+      "How does Robert approach strategy consulting?",
+      "What technical skills has Robert developed recently?",
+      "How does Robert use AI tools in his daily work?",
+      "What's Robert's experience with Google Cloud Platform and AppSheet?",
+      "How does Robert stay current with emerging technologies?"
+    ]
+  },
+  {
+    id: 'decisions',
+    name: 'Career Decisions',
+    icon: '🤔',
+    questions: [
+      "Why did Robert transition from Scelta to CIBC?",
+      "How does Robert approach major career decisions?",
+      "What attracted Robert to innovation strategy consulting?",
+      "How did Robert decide to pursue his master's degree?",
+      "What challenges has Robert faced in his career transitions?",
+      "Where does Robert see his career heading next?"
+    ]
+  },
+  {
+    id: 'achievements',
+    name: 'Key Achievements',
+    icon: '🏆',
+    questions: [
+      "How did Robert move CIBC from #41 to top 20 in AI maturity?",
+      "What was the impact of Robert's 21 AI initiatives at CIBC?",
+      "Tell me about Robert's success scaling Scelta's customer base",
+      "How did Robert win the Ivey Design Innovation Studio competition?",
+      "What recognition has Robert received for his work?",
+      "What are Robert's most significant professional accomplishments?"
+    ]
+  }
+];
 
 export default function VoiceInterface() {
   const [isConnected, setIsConnected] = useState(false);
@@ -22,10 +116,77 @@ export default function VoiceInterface() {
   // Loading step messaging for better user experience during connection
   const [loadingStep, setLoadingStep] = useState('');
   
+  // New state for question categories and management
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  
   const agentRef = useRef<RealtimeAgent | null>(null);
   const sessionRef = useRef<RealtimeSession | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  // Get questions for the selected category
+  const getQuestionsForCategory = () => {
+    if (selectedCategory === 'all') {
+      // Return all questions from all categories (excluding 'all' category itself)
+      return QUESTION_CATEGORIES
+        .filter(cat => cat.id !== 'all')
+        .flatMap(cat => cat.questions);
+    }
+    const category = QUESTION_CATEGORIES.find(cat => cat.id === selectedCategory);
+    return category?.questions || [];
+  };
+
+  // Handle clicking on a question to automatically ask it
+  const handleQuestionClick = async (question: string) => {
+    if (!isConnected) {
+      // If not connected, show a helpful message
+      alert('Please click the phone icon to connect to TopGrade AI first, then click questions to ask them automatically!');
+      return;
+    }
+
+    // Add the question as a user message
+    const userMessage: VoiceMessage = {
+      type: 'user',
+      content: question,
+      timestamp: new Date()
+    };
+    setMessages(prev => [...prev, userMessage]);
+
+    try {
+      // Send the question to the voice API
+      const response = await fetch('/api/voice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ transcript: question })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Add the AI response
+        const assistantMessage: VoiceMessage = {
+          type: 'assistant',
+          content: data.response,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, assistantMessage]);
+
+        // Play the audio response if available
+        if (data.audio) {
+          const audioBlob = new Blob(
+            [Uint8Array.from(atob(data.audio), c => c.charCodeAt(0))],
+            { type: 'audio/mp3' }
+          );
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const audio = new Audio(audioUrl);
+          audio.play().catch(console.error);
+        }
+      }
+    } catch (error) {
+      console.error('Error asking question:', error);
+    }
+  };
 
   useEffect(() => {
     return () => {
@@ -34,6 +195,20 @@ export default function VoiceInterface() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (showCategoryDropdown) {
+        setShowCategoryDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showCategoryDropdown]);
 
   const getCandidateContext = async () => {
     try {
@@ -453,44 +628,90 @@ export default function VoiceInterface() {
           </div>
         )}
 
-        {/* Sample Voice Prompts */}
+        {/* Enhanced Sample Questions with Categories */}
         {connectionStatus !== 'connecting' && (
           <div className="text-center">
             <div className="mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-3 flex items-center space-x-2">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3 flex items-center justify-center space-x-2">
                 <span>Sample Questions</span>
                 <span className="text-emerald-600">💡</span>
               </h3>
               <p className="text-gray-600 text-lg mb-6">
                 {!isConnected 
-                  ? "Click the TopGrade AI phone icon to start, then speak naturally"
-                  : "TopGrade AI is listening - speak naturally and get instant insights"
+                  ? "Click the TopGrade AI phone icon to start, then click any question to ask it automatically"
+                  : "TopGrade AI is listening - click questions to ask instantly or speak naturally"
                 }
               </p>
+
+              {/* Category Selector */}
+              <div className="relative inline-block mb-6">
+                <button
+                  onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
+                  className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                >
+                  <span className="text-lg">
+                    {QUESTION_CATEGORIES.find(cat => cat.id === selectedCategory)?.icon}
+                  </span>
+                  <span className="font-medium">
+                    {QUESTION_CATEGORIES.find(cat => cat.id === selectedCategory)?.name}
+                  </span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showCategoryDropdown ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showCategoryDropdown && (
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl z-10 min-w-64">
+                    {QUESTION_CATEGORIES.map((category) => (
+                      <button
+                        key={category.id}
+                        onClick={() => {
+                          setSelectedCategory(category.id);
+                          setShowCategoryDropdown(false);
+                        }}
+                        className={`w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors duration-150 flex items-center space-x-3 ${
+                          selectedCategory === category.id ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700'
+                        } ${category.id === QUESTION_CATEGORIES[0].id ? 'rounded-t-xl' : ''} ${
+                          category.id === QUESTION_CATEGORIES[QUESTION_CATEGORIES.length - 1].id ? 'rounded-b-xl' : ''
+                        }`}
+                      >
+                        <span className="text-lg">{category.icon}</span>
+                        <span className="font-medium">{category.name}</span>
+                        {selectedCategory === category.id && (
+                          <span className="ml-auto text-emerald-600">✓</span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-              {[
-                "Tell me about Robert's experience with AI and machine learning",
-                "What was Robert's biggest achievement at CIBC?",
-                "Describe Robert's leadership style and experience",
-                "What challenges has Robert faced in his career?",
-                "How does Robert approach strategy consulting?",
-                "What makes Robert a good fit for an AI consultant role?"
-              ].map((prompt, index) => (
+              {getQuestionsForCategory().map((question, index) => (
                 <div
                   key={index}
+                  onClick={() => handleQuestionClick(question)}
                   className="group p-5 bg-gradient-to-br from-white to-gray-50 border border-gray-200 hover:border-emerald-300 rounded-2xl text-left transition-all duration-200 hover:shadow-lg hover:shadow-emerald-100 cursor-pointer hover:scale-105"
                 >
                   <div className="flex items-start space-x-4">
                     <div className="w-10 h-10 bg-gradient-to-br from-emerald-100 to-green-100 group-hover:from-emerald-200 group-hover:to-green-200 rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm">
-                      <svg className="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
-                      </svg>
+                      {isConnected ? (
+                        <svg className="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                        </svg>
+                      ) : (
+                        <svg className="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
+                        </svg>
+                      )}
                     </div>
-                    <span className="text-gray-700 text-sm leading-relaxed font-medium group-hover:text-gray-900 transition-colors duration-200">
-                      &ldquo;{prompt}&rdquo;
-                    </span>
+                    <div className="flex-1">
+                      <span className="text-gray-700 text-sm leading-relaxed font-medium group-hover:text-gray-900 transition-colors duration-200">
+                        &ldquo;{question}&rdquo;
+                      </span>
+                      <div className="mt-2 text-xs text-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        {isConnected ? 'Click to ask instantly' : 'Connect first, then click to ask'}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -500,12 +721,12 @@ export default function VoiceInterface() {
               {!isConnected ? (
                 <>
                   <p className="text-base">Click the phone icon to start a voice conversation with the AI.</p>
-                  <p className="text-base">The AI will listen and respond naturally about Robert&apos;s background.</p>
+                  <p className="text-base">Or browse {getQuestionsForCategory().length} questions above - click any question to ask it automatically once connected!</p>
                 </>
               ) : (
                 <>
-                  <p className="text-base">Voice conversation is active - just speak naturally!</p>
-                  <p className="text-base">The AI will detect when you start speaking and respond about Robert&apos;s background.</p>
+                  <p className="text-base">Voice conversation is active - click questions above to ask instantly or speak naturally!</p>
+                  <p className="text-base">The AI has comprehensive knowledge about Robert&apos;s experience, values, and achievements.</p>
                 </>
               )}
               <div className="bg-gradient-to-r from-slate-50 to-slate-100 border border-slate-200/50 rounded-2xl p-5 mt-6 shadow-sm">
@@ -513,7 +734,7 @@ export default function VoiceInterface() {
                   <strong className="font-semibold text-emerald-700">🚀 TopGrade AI Technology:</strong> Advanced Realtime API with intelligent conversation handling. 
                   Our system automatically detects speech patterns, handles natural interruptions, and maintains contextual awareness throughout your interview session.
                   <span className="text-slate-600 block mt-2 text-xs">
-                    ✓ Microphone permissions required  •  ✓ Optimized for quiet environments  •  ✓ Real-time transcription
+                    ✓ Click questions for instant responses  •  ✓ 6 organized categories  •  ✓ Real-time voice interaction
                   </span>
                 </p>
               </div>
