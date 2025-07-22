@@ -526,6 +526,13 @@
       "description": "Making tough choices with incomplete information",
       "icon": "brain",
       "color": "from-emerald-500 to-green-600"
+    },
+    {
+      "id": "failure-learning",
+      "title": "Failure & Learning",
+      "description": "Learning from setbacks and developing resilience",
+      "icon": "lightbulb",
+      "color": "from-violet-500 to-purple-600"
     }
   ],
   "situationScenarios": [
@@ -592,6 +599,22 @@
       "whatLearned": "Leading without authority requires building influence through demonstrated value and early wins. Quality work and high energy are powerful motivators when you can't rely on formal power structures. Creating clear structure (roadmaps, documentation, deadlines) helps teams prioritize competing demands. Taking personal ownership of problems builds trust and credibility. Momentum is self-reinforcing - early successes make subsequent initiatives easier to achieve.",
       "applicableWhen": ["Cross-functional project leadership", "Consulting and influence-based roles", "Change management initiatives", "Matrix organization navigation", "Driving results without formal authority"],
       "tags": ["leadership-without-authority", "influence-and-persuasion", "project-management", "change-leadership", "cross-functional-coordination"]
+    },
+    {
+      "id": "coding-learning-journey",
+      "categoryId": "failure-learning",
+      "title": "Overcoming Coding Frustration: From Beginner to AI-Powered Developer",
+      "commonQuestion": "Tell me about a time you failed at something or struggled with a steep learning curve. How did you overcome it?",
+      "company": "Personal Development / Scelta Inc",
+      "role": "Self-Directed Learning / Software Integration Consultant",
+      "timeframe": "2021-Present",
+      "situation": "Three years ago, I had never coded seriously but recognized that the future would require technical skills, especially AI-powered development. However, learning to code and build software applications was incredibly frustrating. Every new feature I wanted to add - like user authentication, database integration, or login systems - felt like taking an entire course. I was trying to build complex applications from scratch and felt overwhelmed by the scope and complexity.",
+      "task": "I needed to develop coding and software development skills despite having no technical background, while managing the frustration and temptation to quit. My goal was to become proficient enough to build meaningful applications and understand how technology could transform business processes.",
+      "action": "I completely changed my learning approach after recognizing my initial strategy wasn't working: 1) Established dedicated daily learning time with consistent scheduling, 2) Started reading documentation meticulously instead of jumping straight to building, 3) Adopted a 'build slowly to go fast' philosophy - taking small, controlled steps to understand exactly where I was making mistakes, 4) Focused on understanding fundamentals rather than trying to build groundbreaking apps immediately, 5) Used AI-powered coding tools to accelerate learning while still understanding underlying concepts, 6) Celebrated small wins and incremental progress rather than expecting immediate mastery.",
+      "result": "Transformed from complete beginner to someone who can now understand and build complex applications with confidence. Coding shifted from frustrating to genuinely fun and engaging. This technical foundation became crucial for my success at Scelta (building scalable solutions with Google AppSheet) and CIBC (creating AI-powered tools for research and analysis). I now help organizations leverage technology for competitive advantage, and my learning methodology has improved across all skill areas.",
+      "whatLearned": "Effective learning requires systematic methodology, not just effort. Breaking complex skills into small, controlled steps prevents overwhelm and enables faster progress. Daily consistency beats sporadic intensive sessions. Documentation and fundamentals are more valuable than shortcuts. The initial struggle is normal and temporary - persistence through frustration leads to exponential improvement. AI tools can accelerate learning when combined with solid understanding of basics.",
+      "applicableWhen": ["Learning new technical skills", "Career transitions requiring new competencies", "Overcoming initial failures or frustration", "Developing systematic learning approaches", "Building resilience through difficult skill acquisition"],
+      "tags": ["continuous-learning", "resilience", "technical-skills", "methodology-development", "growth-mindset"]
     }
   ],
   "keyStories": [
