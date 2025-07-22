@@ -31,14 +31,18 @@ interface JobFitAnalysisResult {
 
 // Function to extract Robert's comprehensive experience summary
 function getCandidateProfile() {
+  // Extract skills and technologies from all experience entries
+  const allSkills = candidateData.experience?.flatMap(exp => exp.skills || []) || [];
+  const allTechnologies = candidateData.experience?.flatMap(exp => exp.technologies || []) || [];
+
   const profile = {
     personal: candidateData.personal,
     education: candidateData.education,
     experience: candidateData.experience,
     strengths: candidateData.strengths || [],
     keyStories: candidateData.keyStories || [],
-    skills: candidateData.skills || [],
-    technologies: candidateData.technologies || []
+    skills: allSkills,
+    technologies: allTechnologies
   };
 
   return `
