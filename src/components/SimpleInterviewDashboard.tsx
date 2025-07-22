@@ -15,7 +15,7 @@ export default function SimpleInterviewDashboard() {
   const tabs = [
     {
       id: 'assistant',
-      label: 'AI Assistant',
+      label: 'Chat Assistant',
       icon: MessageSquare,
       description: 'Ask questions about the candidate'
     },
@@ -120,7 +120,7 @@ export default function SimpleInterviewDashboard() {
                     {/* Show shorter labels on mobile for better fit */}
                     <span className="hidden sm:inline">{tab.label}</span>
                     <span className="sm:hidden">
-                      {tab.id === 'assistant' ? 'AI' : 
+                      {tab.id === 'assistant' ? 'Chat' : 
                        tab.id === 'voice' ? 'Voice' : 
                        tab.id === 'profile' ? 'Profile' : 
                        tab.id === 'values' ? 'Values' :
