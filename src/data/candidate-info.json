@@ -560,6 +560,22 @@
       "whatLearned": "Building consensus in large organizations requires understanding each stakeholder's unique perspective and concerns, then addressing them with data-driven arguments rather than opinions. External validation can be a powerful catalyst for overcoming internal resistance. One-on-one relationship building is essential before group consensus-building. Success breeds momentum - early wins help overcome skepticism.",
       "applicableWhen": ["Cross-functional team alignment", "Executive stakeholder management", "Change management initiatives", "Risk-averse organization transformation", "Complex organizational politics"],
       "tags": ["stakeholder-management", "consensus-building", "change-management", "data-driven-decision-making", "organizational-alignment"]
+    },
+    {
+      "id": "scelta-cibc-decision",
+      "categoryId": "difficult-decisions",
+      "title": "Strategic Career Pivot: Leaving Startup for Corporate Banking Experience",
+      "commonQuestion": "Tell me about a difficult decision you had to make with incomplete information. How did you approach it?",
+      "company": "Transitioning from Scelta to CIBC",
+      "role": "Graduate Student / Innovation Consultant",
+      "timeframe": "2023 (during Ivy Business School)",
+      "situation": "While completing my master's at Ivy Business School and continuing part-time work at Scelta, I won a design innovation competition in partnership with CIBC. The competition performance led to a direct job offer from CIBC for a full-time innovation strategy role. This created a difficult decision point: stay with Scelta (a company and team I loved) or take a leap into corporate banking - something I'd never experienced before.",
+      "task": "I needed to make a strategic career decision with significant long-term implications while dealing with incomplete information about corporate life, my fit within a large bank, and whether this path aligned with my career goals. The decision carried emotional weight (leaving great colleagues) and uncertainty about a completely different work environment.",
+      "action": "I approached this systematically by: 1) Creating a decision framework with five key criteria: financial considerations, learning and growth opportunities, job satisfaction potential, career progression paths, and work style preferences, 2) Conducting a structured analysis scoring each option against these criteria, 3) Seeking advice from multiple industry mentors who unanimously suggested I pursue the corporate experience, 4) Recognizing the strategic timing element - 'if I don't seize this opportunity now, I may never get another chance to experience enterprise life,' 5) Identifying the unique learning opportunity to understand technology buying from the enterprise customer perspective, 6) Negotiating risk mitigation with Scelta leadership, who graciously offered options to return or continue part-time work if needed.",
+      "result": "Made the strategic decision to join CIBC, which proved transformational for my career development. The experience provided invaluable insights into enterprise decision-making, large-scale technology implementation, and corporate innovation processes. This foundation became crucial for subsequent success in AI strategy and stakeholder management. The decision validated my framework approach - while I was uncertain about long-term corporate fit, the learning and growth criteria proved most important. Scelta's supportive approach maintained that relationship for potential future opportunities.",
+      "whatLearned": "Complex career decisions benefit from systematic frameworks rather than purely emotional responses. Sometimes the best opportunities come with uncertainty - the key is assessing whether the potential learning justifies the risk. Timing matters in career decisions; unique opportunities may not repeat. Having exit strategies and maintaining relationships reduces decision anxiety. Seeking diverse mentor perspectives provides valuable external validation of reasoning.",
+      "applicableWhen": ["Career transition decisions", "Startup vs. corporate choices", "Opportunity evaluation with incomplete information", "Risk assessment in professional development", "Strategic career planning"],
+      "tags": ["decision-making-framework", "career-strategy", "risk-assessment", "analytical-thinking", "opportunity-evaluation"]
     }
   ],
   "keyStories": [
