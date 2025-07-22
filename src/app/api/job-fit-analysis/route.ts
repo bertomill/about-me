@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import candidateData from '@/data/candidate-info.json';
+import { Strength, KeyStory } from '@/types/candidate';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -73,7 +74,7 @@ ${profile.experience.map(exp => `
 CORE STRENGTHS:
 ${typeof profile.strengths[0] === 'string' 
   ? profile.strengths.join(', ')
-  : profile.strengths.map((s: any) => `
+  : profile.strengths.map((s: Strength) => `
 - ${s.title}: ${s.summary}
   Details: ${s.details}
   Impact: ${s.impact}
@@ -82,7 +83,7 @@ ${typeof profile.strengths[0] === 'string'
 `).join('')}
 
 KEY STORIES:
-${profile.keyStories.map((story: any) => `
+${profile.keyStories.map((story: KeyStory) => `
 - ${story.title}
   Situation: ${story.situation}
   Task: ${story.task}
