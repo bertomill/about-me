@@ -198,7 +198,7 @@ export default function VoiceInterface() {
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = () => {
       if (showCategoryDropdown) {
         setShowCategoryDropdown(false);
       }
