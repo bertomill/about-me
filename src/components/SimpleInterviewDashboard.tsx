@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageSquare, User, Mic, Target, Heart, X, Shield, Eye, Lock, CheckCircle } from 'lucide-react';
+import { MessageSquare, User, Mic, Target, Heart, X, Shield, Eye, Lock, CheckCircle, Linkedin, Github, Youtube, Instagram, Twitter, FileText } from 'lucide-react';
 import QuestionInterface from '@/components/QuestionInterface';
 import CandidateProfile from '@/components/CandidateProfile';
 import VoiceInterface from '@/components/VoiceInterface';
@@ -74,6 +74,98 @@ export default function SimpleInterviewDashboard() {
                 <p className="text-xs sm:text-sm text-slate-300">Candidate Intelligence Platform</p>
               </div>
             </div>
+            
+            {/* Social Media Links - Desktop */}
+            <div className="hidden md:flex items-center space-x-3">
+              <div className="flex items-center space-x-2 bg-slate-800/50 rounded-lg px-3 py-2 border border-slate-600/50">
+                <a 
+                  href="https://www.linkedin.com/in/bertomill/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform"
+                  title="LinkedIn"
+                >
+                  <Linkedin size={18} />
+                </a>
+                <a 
+                  href="https://github.com/bertomill" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-white transition-colors duration-200 hover:scale-110 transform"
+                  title="GitHub"
+                >
+                  <Github size={18} />
+                </a>
+                <a 
+                  href="https://www.youtube.com/@Bertomill1" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-red-400 transition-colors duration-200 hover:scale-110 transform"
+                  title="YouTube"
+                >
+                  <Youtube size={18} />
+                </a>
+                <a 
+                  href="https://medium.com/@bertomill" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-green-400 transition-colors duration-200 hover:scale-110 transform"
+                  title="Medium Blog"
+                >
+                  <FileText size={18} />
+                </a>
+                <a 
+                  href="https://x.com/bertomill1" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-sky-400 transition-colors duration-200 hover:scale-110 transform"
+                  title="Twitter/X"
+                >
+                  <Twitter size={18} />
+                </a>
+                <a 
+                  href="https://www.instagram.com/bertomill/?hl=en" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-pink-400 transition-colors duration-200 hover:scale-110 transform"
+                  title="Instagram"
+                >
+                  <Instagram size={18} />
+                </a>
+              </div>
+            </div>
+
+            {/* Social Media Links - Mobile (key platforms only) */}
+            <div className="flex md:hidden items-center space-x-2">
+              <a 
+                href="https://www.linkedin.com/in/bertomill/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-blue-400 transition-colors duration-200 p-1"
+                title="LinkedIn"
+              >
+                <Linkedin size={16} />
+              </a>
+              <a 
+                href="https://github.com/bertomill" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-white transition-colors duration-200 p-1"
+                title="GitHub"
+              >
+                <Github size={16} />
+              </a>
+              <a 
+                href="https://www.youtube.com/@Bertomill1" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-red-400 transition-colors duration-200 p-1"
+                title="YouTube"
+              >
+                <Youtube size={16} />
+              </a>
+            </div>
+
             <div className="flex items-center space-x-3">
               <div className="px-3 sm:px-4 py-2 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 border border-emerald-400/30 text-emerald-200 rounded-full text-xs font-semibold backdrop-blur-sm hover:bg-gradient-to-r hover:from-emerald-500/30 hover:to-blue-500/30 transition-all duration-300">
                 <div className="flex items-center space-x-2">
