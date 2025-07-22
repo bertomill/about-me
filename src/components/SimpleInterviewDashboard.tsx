@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageSquare, User, Mic, Target, Heart, X, Shield, Eye, Lock, CheckCircle, Linkedin, Github, Youtube, Instagram, Twitter, FileText } from 'lucide-react';
+import { MessageSquare, User, Mic, Target, Heart, Brain, X, Shield, Eye, Lock, CheckCircle, Linkedin, Github, Youtube, Instagram, Twitter, FileText } from 'lucide-react';
 import QuestionInterface from '@/components/QuestionInterface';
 import CandidateProfile from '@/components/CandidateProfile';
 import VoiceInterface from '@/components/VoiceInterface';
 import JobFitAnalysis from '@/components/JobFitAnalysis';
 import Values from '@/components/Values';
+import SituationAnalysis from '@/components/SituationAnalysis';
 
 export default function SimpleInterviewDashboard() {
   const [activeTab, setActiveTab] = useState('assistant');
@@ -42,6 +43,12 @@ export default function SimpleInterviewDashboard() {
       label: 'Values',
       icon: Heart,
       description: 'Core values and career experiences'
+    },
+    {
+      id: 'situation-analysis',
+      label: 'Situation Analysis',
+      icon: Brain,
+      description: 'Behavioral examples and problem-solving approaches'
     }
   ];
 
@@ -216,6 +223,7 @@ export default function SimpleInterviewDashboard() {
                        tab.id === 'voice' ? 'Voice' : 
                        tab.id === 'profile' ? 'Profile' : 
                        tab.id === 'values' ? 'Values' :
+                       tab.id === 'situation-analysis' ? 'Situations' :
                        'Job Fit'}
                     </span>
                   </span>
@@ -318,6 +326,12 @@ export default function SimpleInterviewDashboard() {
         {activeTab === 'values' && (
           <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200/60 shadow-sm hover:shadow-md hover:border-gray-300/80 transition-all duration-300">
             <Values />
+          </div>
+        )}
+
+        {activeTab === 'situation-analysis' && (
+          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200/60 shadow-sm hover:shadow-md hover:border-gray-300/80 transition-all duration-300">
+            <SituationAnalysis />
           </div>
         )}
       </div>
