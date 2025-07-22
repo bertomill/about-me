@@ -544,6 +544,22 @@
       "whatLearned": "Proactive communication during crisis is as important as technical fixes. Setting realistic expectations upfront about potential issues in new technology rollouts prevents stakeholder disappointment. Building redundancy and failover systems should be standard practice, not reactive measures.",
       "applicableWhen": ["System outages", "Technology rollouts", "Stakeholder crisis communication", "Vendor management issues", "Service reliability problems"],
       "tags": ["crisis-management", "stakeholder-communication", "technical-problem-solving", "vendor-management", "system-reliability"]
+    },
+    {
+      "id": "cibc-stakeholder-alignment",
+      "categoryId": "team-dynamics",
+      "title": "Building Consensus Across CIBC Business Units for AI Strategy",
+      "commonQuestion": "Tell me about a time when you had to build consensus among stakeholders with different priorities and get them aligned on a common goal.",
+      "company": "CIBC",
+      "role": "Innovation Strategy Consultant",
+      "timeframe": "2023-2024",
+      "situation": "Leading CIBC's AI maturity transformation required alignment across multiple stakeholder groups with competing priorities and risk tolerances. The bank ranked #41 globally while all Canadian peers were in the top 20. I needed to coordinate between our CTO office, communications team, governance/compliance team, marketing team, and multiple business units - each with different concerns about external AI positioning and internal risk exposure.",
+      "task": "My task was to build consensus on a comprehensive AI strategy involving 21 initiatives that would elevate our external AI maturity ranking while managing internal stakeholder concerns. Business units were resistant, saying 'We've never talked about AI this way before' and expressing concerns about departmental risk exposure from public AI positioning.",
+      "action": "I implemented a multi-pronged consensus-building strategy: 1) Conducted extensive one-on-one meetings with each stakeholder group to understand their specific concerns and priorities, 2) Organized collaborative workshops to facilitate cross-team dialogue and alignment, 3) Presented extensive industry benchmarking data showing 'everyone is doing this and we're falling behind' to shift from opinion-based to fact-based discussions, 4) Worked closely with governance to ensure all messaging met compliance requirements, 5) Collaborated with marketing to align AI positioning with broader brand strategy, 6) Provided clear explanations of long-term benefits and external positioning value, 7) Used data-driven insights throughout, consistently emphasizing 'this is not our opinion, this is the data and the facts.'",
+      "result": "Successfully achieved stakeholder alignment and consensus across all business units. The breakthrough came halfway through the engagement when external consultants (Evident) provided feedback showing our score trajectory was highly favorable - this created excitement and momentum that eliminated remaining resistance. The strategy expanded from initial 10 initiatives to 21 initiatives due to stakeholder buy-in. Final result: moved CIBC from #41 to #21 globally in AI maturity rankings. The success was so significant it was featured in the CEO's annual report and multiple quarterly earnings calls.",
+      "whatLearned": "Building consensus in large organizations requires understanding each stakeholder's unique perspective and concerns, then addressing them with data-driven arguments rather than opinions. External validation can be a powerful catalyst for overcoming internal resistance. One-on-one relationship building is essential before group consensus-building. Success breeds momentum - early wins help overcome skepticism.",
+      "applicableWhen": ["Cross-functional team alignment", "Executive stakeholder management", "Change management initiatives", "Risk-averse organization transformation", "Complex organizational politics"],
+      "tags": ["stakeholder-management", "consensus-building", "change-management", "data-driven-decision-making", "organizational-alignment"]
     }
   ],
   "keyStories": [
