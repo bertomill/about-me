@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageSquare, User, Mic, Target, X, Shield, Eye, Lock, CheckCircle } from 'lucide-react';
+import { MessageSquare, User, Mic, Target, Heart, X, Shield, Eye, Lock, CheckCircle } from 'lucide-react';
 import QuestionInterface from '@/components/QuestionInterface';
 import CandidateProfile from '@/components/CandidateProfile';
 import VoiceInterface from '@/components/VoiceInterface';
 import JobFitAnalysis from '@/components/JobFitAnalysis';
+import Values from '@/components/Values';
 
 export default function SimpleInterviewDashboard() {
   const [activeTab, setActiveTab] = useState('assistant');
@@ -35,6 +36,12 @@ export default function SimpleInterviewDashboard() {
       label: 'Job Fit Analysis',
       icon: Target,
       description: 'Skills alignment with Glia requirements'
+    },
+    {
+      id: 'values',
+      label: 'Values',
+      icon: Heart,
+      description: 'Core values and career experiences'
     }
   ];
 
@@ -116,6 +123,7 @@ export default function SimpleInterviewDashboard() {
                       {tab.id === 'assistant' ? 'AI' : 
                        tab.id === 'voice' ? 'Voice' : 
                        tab.id === 'profile' ? 'Profile' : 
+                       tab.id === 'values' ? 'Values' :
                        'Job Fit'}
                     </span>
                   </span>
@@ -212,6 +220,12 @@ export default function SimpleInterviewDashboard() {
         {activeTab === 'jobfit' && (
           <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200/60 shadow-sm hover:shadow-md hover:border-gray-300/80 transition-all duration-300">
             <JobFitAnalysis />
+          </div>
+        )}
+
+        {activeTab === 'values' && (
+          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200/60 shadow-sm hover:shadow-md hover:border-gray-300/80 transition-all duration-300">
+            <Values />
           </div>
         )}
       </div>
