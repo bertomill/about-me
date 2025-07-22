@@ -76,11 +76,11 @@ export default function Values() {
           </div>
           <div>
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 flex items-center space-x-2">
-              <span>Core Values: CHAMPR Framework</span>
+              <span>Core Values & Guiding Principles</span>
               <span className="text-purple-600 text-lg">💎</span>
             </h2>
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-              The 8 fundamental principles that guide Robert's decisions and drive his approach to work, relationships, and personal growth - each backed by real career experiences.
+              The fundamental principles that guide Robert's decisions and drive his approach to work, relationships, and personal growth - each demonstrated through real career experiences.
             </p>
           </div>
         </div>
@@ -250,16 +250,16 @@ export default function Values() {
         )}
       </div>
 
-      {/* Values Framework Summary */}
+      {/* Values Summary */}
       <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border border-purple-200 p-6">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
             <Star size={20} className="text-purple-600" />
           </div>
           <div>
-            <h4 className="font-semibold text-purple-900 mb-1">CHAMPR Framework</h4>
+            <h4 className="font-semibold text-purple-900 mb-1">Authentically Demonstrated</h4>
             <p className="text-sm text-purple-700">
-              Robert's core values form the CHAMPR framework: <span className="font-medium">Collaborate, Challenge, Customer-Centric, Master, Make Impact, Persevere, Personal Ownership, Resourceful</span> - each value demonstrated through real career achievements and ongoing personal development.
+              Robert's values aren't just words on a page - they're principles lived out through real career decisions, from <span className="font-medium">scaling startups and mastering AI transformation</span> to <span className="font-medium">training for world-class competitions and serving customers hands-on</span>. Each value represents authentic experiences and ongoing personal development.
             </p>
           </div>
         </div>
