@@ -576,6 +576,22 @@
       "whatLearned": "Complex career decisions benefit from systematic frameworks rather than purely emotional responses. Sometimes the best opportunities come with uncertainty - the key is assessing whether the potential learning justifies the risk. Timing matters in career decisions; unique opportunities may not repeat. Having exit strategies and maintaining relationships reduces decision anxiety. Seeking diverse mentor perspectives provides valuable external validation of reasoning.",
       "applicableWhen": ["Career transition decisions", "Startup vs. corporate choices", "Opportunity evaluation with incomplete information", "Risk assessment in professional development", "Strategic career planning"],
       "tags": ["decision-making-framework", "career-strategy", "risk-assessment", "analytical-thinking", "opportunity-evaluation"]
+    },
+    {
+      "id": "cibc-ai-initiatives-leadership",
+      "categoryId": "leadership-initiative",
+      "title": "Leading 21 AI Transformation Initiatives Without Formal Authority",
+      "commonQuestion": "Tell me about a time you had to lead a project or initiative without formal authority. How did you motivate people and drive results?",
+      "company": "CIBC",
+      "role": "Innovation Strategy Consultant",
+      "timeframe": "2023-2024",
+      "situation": "After conducting deep data analysis on CIBC's AI maturity gaps, I identified 21 specific opportunities to improve our global ranking from #41. However, as an external consultant with no formal authority, I needed to drive execution across multiple business units and departments that already had competing priorities and heavy workloads. Teams were initially resistant, viewing this as additional work on top of their existing responsibilities.",
+      "task": "My task was to lead the implementation of all 21 AI transformation initiatives across the organization without any direct reporting relationships or formal authority. I needed to motivate teams, coordinate cross-functional efforts, manage timelines, and ensure quality execution while overcoming resistance and competing priorities.",
+      "action": "I approached this by building momentum through early wins and demonstrating value: 1) Started with the most achievable initiatives to build confidence and show quick results, 2) Focused on delivering exceptional quality in every interaction to motivate teams to prioritize responses, 3) Created comprehensive project roadmaps with clear deadlines and documentation for full transparency, 4) Organized cross-functional teams and working groups to foster collaboration, 5) Brought high energy and enthusiasm to every meeting to maintain motivation, 6) When critical initiatives stalled, I took direct ownership and worked one-on-one with team leads to resolve blockers, 7) Used early successes to demonstrate project value and secure broader organizational buy-in for remaining initiatives.",
+      "result": "Successfully led the implementation of all 21 AI transformation initiatives, moving CIBC from #41 to top 20 globally in AI maturity rankings. The early wins created a positive momentum cycle where teams became increasingly engaged and proactive as they saw the impact. The project expanded beyond initial scope as stakeholders gained confidence in the approach and results. The success was featured in CEO reports and quarterly earnings calls, validating the leadership approach and stakeholder engagement strategy.",
+      "whatLearned": "Leading without authority requires building influence through demonstrated value and early wins. Quality work and high energy are powerful motivators when you can't rely on formal power structures. Creating clear structure (roadmaps, documentation, deadlines) helps teams prioritize competing demands. Taking personal ownership of problems builds trust and credibility. Momentum is self-reinforcing - early successes make subsequent initiatives easier to achieve.",
+      "applicableWhen": ["Cross-functional project leadership", "Consulting and influence-based roles", "Change management initiatives", "Matrix organization navigation", "Driving results without formal authority"],
+      "tags": ["leadership-without-authority", "influence-and-persuasion", "project-management", "change-leadership", "cross-functional-coordination"]
     }
   ],
   "keyStories": [
