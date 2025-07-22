@@ -491,6 +491,61 @@
       "tags": ["resourceful", "innovation", "efficiency"]
     }
   ],
+  "situationCategories": [
+    {
+      "id": "crisis-management",
+      "title": "Crisis Management",
+      "description": "How I handle urgent problems and system failures",
+      "icon": "alert-triangle",
+      "color": "from-red-500 to-orange-600"
+    },
+    {
+      "id": "team-dynamics",
+      "title": "Team Dynamics", 
+      "description": "Managing disagreements and building consensus",
+      "icon": "users",
+      "color": "from-blue-500 to-indigo-600"
+    },
+    {
+      "id": "performance-challenges",
+      "title": "Performance Challenges",
+      "description": "Dealing with underperformance and missed deadlines",
+      "icon": "trending-down",
+      "color": "from-yellow-500 to-orange-600"
+    },
+    {
+      "id": "time-pressure",
+      "title": "Time Pressure",
+      "description": "Delivering under tight deadlines and competing priorities",
+      "icon": "clock",
+      "color": "from-purple-500 to-pink-600"
+    },
+    {
+      "id": "difficult-decisions",
+      "title": "Difficult Decisions",
+      "description": "Making tough choices with incomplete information",
+      "icon": "brain",
+      "color": "from-emerald-500 to-green-600"
+    }
+  ],
+  "situationScenarios": [
+    {
+      "id": "cibc-ai-tool-outage",
+      "categoryId": "crisis-management",
+      "title": "CIBC AI Knowledge Base System Failure",
+      "commonQuestion": "Tell me about a time when a critical system failed and stakeholders were impacted. How did you handle it?",
+      "company": "CIBC",
+      "role": "Innovation Strategy Consultant",
+      "timeframe": "2023",
+      "situation": "We rolled out CIBC's internal AI knowledge base tool to 300 employees to help them query company policies and documents. The system began experiencing critical failures - hitting rate limits internally, suffering from slow performance, and experiencing OpenAI service overloads that left employees unable to access the tool they were rapidly adopting.",
+      "task": "As part of the AI team, I needed to resolve the technical issues while maintaining stakeholder confidence and minimizing business disruption. Over 100 complaint emails were flooding in from frustrated employees who were losing faith in the product.",
+      "action": "I implemented a comprehensive crisis response strategy: 1) Established daily morning email updates to all 300 users with transparent status reports, 2) Created a Workplace group chat for real-time updates and Q&A to enable immediate communication, 3) Collaborated with our communications team for formal company announcements, 4) Worked directly with Microsoft as our vendor to implement technical solutions including multiple model options for automatic failover routing, 5) Implemented token caching to reduce redundant API calls, 6) Limited conversation length to preserve memory and reduce system load, 7) Stayed late multiple nights to ensure timely stakeholder communication.",
+      "result": "Resolved the crisis in 3 weeks with a more resilient system featuring automatic model switching and improved performance. The transparent communication strategy maintained stakeholder confidence - complaint emails dropped to zero and adoption continued growing. The system became significantly more reliable with multiple failover options preventing future single points of failure.",
+      "whatLearned": "Proactive communication during crisis is as important as technical fixes. Setting realistic expectations upfront about potential issues in new technology rollouts prevents stakeholder disappointment. Building redundancy and failover systems should be standard practice, not reactive measures.",
+      "applicableWhen": ["System outages", "Technology rollouts", "Stakeholder crisis communication", "Vendor management issues", "Service reliability problems"],
+      "tags": ["crisis-management", "stakeholder-communication", "technical-problem-solving", "vendor-management", "system-reliability"]
+    }
+  ],
   "keyStories": [
     {
       "title": "Transforming CIBC's AI Maturity Ranking",

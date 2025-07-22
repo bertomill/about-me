@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import { AlertTriangle, Users, TrendingDown, Clock, Shield, Target, CheckCircle, Briefcase, Calendar, ChevronRight, Star, Brain } from 'lucide-react';
 
+// Import your real candidate data
+import candidateData from '@/data/candidate-info.json';
+
 // Types for situation analysis data structure
 interface SituationCategory {
   id: string;
@@ -32,64 +35,9 @@ interface SituationScenario {
 export default function SituationAnalysis() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-  // Placeholder categories - will be populated with real data
-  const situationCategories: SituationCategory[] = [
-    {
-      id: 'crisis-management',
-      title: 'Crisis Management',
-      description: 'How I handle urgent problems and system failures',
-      icon: 'alert-triangle',
-      color: 'from-red-500 to-orange-600'
-    },
-    {
-      id: 'team-conflict',
-      title: 'Team Dynamics',
-      description: 'Managing disagreements and building consensus',
-      icon: 'users',
-      color: 'from-blue-500 to-indigo-600'
-    },
-    {
-      id: 'performance-issues',
-      title: 'Performance Challenges',
-      description: 'Dealing with underperformance and missed deadlines',
-      icon: 'trending-down',
-      color: 'from-yellow-500 to-orange-600'
-    },
-    {
-      id: 'time-pressure',
-      title: 'Time Pressure',
-      description: 'Delivering under tight deadlines and competing priorities',
-      icon: 'clock',
-      color: 'from-purple-500 to-pink-600'
-    },
-    {
-      id: 'difficult-decisions',
-      title: 'Difficult Decisions',
-      description: 'Making tough choices with incomplete information',
-      icon: 'brain',
-      color: 'from-emerald-500 to-green-600'
-    }
-  ];
-
-  // Placeholder scenarios - will be populated with real examples
-  const situationScenarios: SituationScenario[] = [
-    {
-      id: 'system-failure',
-      categoryId: 'crisis-management',
-      title: 'Critical System Outage During Peak Hours',
-      commonQuestion: 'Tell me about a time when a critical system failed and customers were impacted. How did you handle it?',
-      company: 'Example Company',
-      role: 'Consultant',
-      timeframe: '2023',
-      situation: 'Placeholder situation description',
-      task: 'Placeholder task description', 
-      action: 'Placeholder action taken',
-      result: 'Placeholder result achieved',
-      whatLearned: 'Key insights gained from this experience',
-      applicableWhen: ['System outages', 'Customer escalations', 'Crisis communication'],
-      tags: ['crisis', 'communication', 'customer-service']
-    }
-  ];
+  // Get real data from candidate info
+  const situationCategories: SituationCategory[] = candidateData.situationCategories || [];
+  const situationScenarios: SituationScenario[] = candidateData.situationScenarios || [];
 
   const getIconComponent = (iconName: string) => {
     const iconMap = {
@@ -99,7 +47,8 @@ export default function SituationAnalysis() {
       'clock': Clock,
       'shield': Shield,
       'target': Target,
-      'brain': Brain
+      'brain': Brain,
+      'star': Star
     };
     return iconMap[iconName as keyof typeof iconMap] || Star;
   };
@@ -319,16 +268,16 @@ export default function SituationAnalysis() {
         )}
       </div>
 
-      {/* Coming Soon Notice */}
+      {/* Behavioral Framework Summary */}
       <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-200 p-6">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
             <Star size={20} className="text-indigo-600" />
           </div>
           <div>
-            <h4 className="font-semibold text-indigo-900 mb-1">Behavioral Examples Coming Soon</h4>
+            <h4 className="font-semibold text-indigo-900 mb-1">STAR Format Examples</h4>
             <p className="text-sm text-indigo-700">
-              Real situational examples from Robert&apos;s career will be added to demonstrate problem-solving approaches, decision-making under pressure, and learning from challenging experiences across different categories.
+              Each scenario follows the proven STAR format (Situation, Task, Action, Result) with additional insights on lessons learned and when these approaches apply. Perfect preparation for behavioral interviews and &quot;tell me about a time when&quot; questions.
             </p>
           </div>
         </div>
