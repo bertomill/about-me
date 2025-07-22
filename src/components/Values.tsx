@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Heart, Target, Users, Lightbulb, TrendingUp, Award, ChevronRight, Star, CheckCircle, Briefcase, Calendar, Shield, Wrench } from 'lucide-react';
+import { useState } from 'react';
+import { Heart, Target, Users, Lightbulb, TrendingUp, Award, Star, CheckCircle, Briefcase, Calendar, Shield, Wrench } from 'lucide-react';
 
 // Import your real candidate data
 import candidateData from '@/data/candidate-info.json';
@@ -80,7 +80,7 @@ export default function Values() {
               <span className="text-purple-600 text-lg">💎</span>
             </h2>
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-              The fundamental principles that guide Robert's decisions and drive his approach to work, relationships, and personal growth - each demonstrated through real career experiences.
+              The fundamental principles that guide Robert&apos;s decisions and drive his approach to work, relationships, and personal growth - each demonstrated through real career experiences.
             </p>
           </div>
         </div>
@@ -259,7 +259,7 @@ export default function Values() {
           <div>
             <h4 className="font-semibold text-purple-900 mb-1">Authentically Demonstrated</h4>
             <p className="text-sm text-purple-700">
-              Robert's values aren't just words on a page - they're principles lived out through real career decisions, from <span className="font-medium">scaling startups and mastering AI transformation</span> to <span className="font-medium">training for world-class competitions and serving customers hands-on</span>. Each value represents authentic experiences and ongoing personal development.
+              Robert&apos;s values aren&apos;t just words on a page - they&apos;re principles lived out through real career decisions, from <span className="font-medium">scaling startups and mastering AI transformation</span> to <span className="font-medium">training for world-class competitions and serving customers hands-on</span>. Each value represents authentic experiences and ongoing personal development.
             </p>
           </div>
         </div>
