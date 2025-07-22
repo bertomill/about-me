@@ -279,6 +279,218 @@
       ]
     }
   ],
+  "values": [
+    {
+      "id": "collaborate",
+      "title": "Collaborate",
+      "shortDescription": "Community = 10x Growth Opportunity",
+      "description": "Without teamwork, you miss exponential growth through learning from each other. Open to learning, not stuck in my ways - will try something new despite the challenge.",
+      "icon": "users",
+      "color": "from-emerald-500 to-green-600",
+      "principles": [
+        "Community unlocks 10x growth opportunities",
+        "Learn from each other constantly",
+        "Meet people where they are - literally"
+      ]
+    },
+    {
+      "id": "challenge",
+      "title": "Challenge",
+      "shortDescription": "Embrace the Premium on Flexibility",
+      "description": "Always willing to challenge status quo and change how I do things. Enjoy the challenge of learning something completely new, especially in our rapidly evolving world.",
+      "icon": "target",
+      "color": "from-orange-500 to-red-600",
+      "principles": [
+        "Challenge status quo and change processes",
+        "Embrace flexibility as a premium skill",
+        "Learn new things despite the difficulty"
+      ]
+    },
+    {
+      "id": "customer-centric",
+      "title": "Customer-Centric",
+      "shortDescription": "Experience = Everything",
+      "description": "Customer experience determines success - that's where the money comes from. Focus on how customers actually experience your product in real environments.",
+      "icon": "heart",
+      "color": "from-pink-500 to-rose-600",
+      "principles": [
+        "Customer experience drives all success",
+        "Meet customers in their environment",
+        "Understand the real user journey"
+      ]
+    },
+    {
+      "id": "master",
+      "title": "Master",
+      "shortDescription": "Exponential Rewards Beyond the Bell Curve",
+      "description": "Craft mastery is one of life's most fulfilling pursuits. Create 'jaw-dropping wow' vs settling for mediocrity. Niche down to be the very best - exponential rewards await.",
+      "icon": "star",
+      "color": "from-purple-500 to-indigo-600",
+      "principles": [
+        "Craft mastery is deeply fulfilling",
+        "Create wow vs accepting mediocrity",
+        "Exponential rewards beyond average"
+      ]
+    },
+    {
+      "id": "make-impact",
+      "title": "Make Impact",
+      "shortDescription": "Focus + Process = Maximum Leverage",
+      "description": "Focus on where you bring the most impact. Value of dialing in your process to make the most of talents and skills for transformational outcomes.",
+      "icon": "trending-up",
+      "color": "from-blue-500 to-cyan-600",
+      "principles": [
+        "Focus on maximum impact opportunities",
+        "Dial in process for talent leverage",
+        "Deliver transformational outcomes"
+      ]
+    },
+    {
+      "id": "persevere",
+      "title": "Persevere",
+      "shortDescription": "Show Up Daily Despite the Ups and Downs",
+      "description": "Athletic background taught me about loss, injury, rejection, and long training with no immediate reward. Consistency through adversity builds champions.",
+      "icon": "shield",
+      "color": "from-red-500 to-pink-600",
+      "principles": [
+        "Show up daily through adversity",
+        "Consistency builds champions",
+        "Embrace difficulty as growth"
+      ]
+    },
+    {
+      "id": "personal-ownership",
+      "title": "Personal Ownership",
+      "shortDescription": "Full Buy-In = Team Victory",
+      "description": "Take accountability for results, no excuses. Selflessly add to the team - that's how teams truly win. Everyone must fully buy in for exponential results.",
+      "icon": "check-circle",
+      "color": "from-green-500 to-emerald-600",
+      "principles": [
+        "Take full accountability for results",
+        "Selflessly contribute to team success",
+        "Full buy-in enables victory"
+      ]
+    },
+    {
+      "id": "resourceful",
+      "title": "Resourceful",
+      "shortDescription": "High-Leverage Tools > Reinventing the Wheel",
+      "description": "Throw yourself into challenges, trust you'll figure it out. Focus on the problem, not traditional solution paths. Always seek super high-leverage tools.",
+      "icon": "wrench",
+      "color": "from-amber-500 to-orange-600",
+      "principles": [
+        "Trust ability to figure things out",
+        "Focus on problems, not traditional paths",
+        "Leverage existing tools vs rebuilding"
+      ]
+    }
+  ],
+  "valueExperiences": [
+    {
+      "id": "scelta-scaling",
+      "valueId": "collaborate",
+      "title": "Scaling Scelta Through Team Collaboration",
+      "company": "Scelta Inc",
+      "role": "Software Integration Consultant",
+      "timeframe": "2022-2023",
+      "situation": "Startup team needed to scale from 5 to 20+ customers without proportional increase in development effort",
+      "action": "Collaborated with engineers and founders to transition from custom JavaScript solutions to templateable Google AppSheet solutions, enabling team-wide efficiency",
+      "impact": "Achieved 300% customer growth while maintaining team size, demonstrating how collaboration unlocks exponential growth opportunities",
+      "learnings": ["Team collaboration", "Scaling processes", "Knowledge sharing"],
+      "tags": ["collaboration", "scaling", "teamwork"]
+    },
+    {
+      "id": "ai-transformation",
+      "valueId": "challenge",
+      "title": "Learning AI and Coding from Scratch",
+      "company": "Personal Development",
+      "role": "Self-Directed Learning",
+      "timeframe": "2021-Present",
+      "situation": "AI revolution demanded new skills - had never coded seriously 3 years ago but recognized the premium on flexibility in the modern economy",
+      "action": "Challenged myself to learn coding, AI tools, and emerging technologies despite having no traditional background. Embraced the difficulty of learning something completely new",
+      "impact": "Now recognized as 'most resourceful person' for tool selection and AI implementation. Currently using cutting-edge tools like Cursor, Sora, and OpenAI Realtime",
+      "learnings": ["Flexibility premium", "Continuous learning", "Adapting to change"],
+      "tags": ["challenge", "learning", "AI", "coding"]
+    },
+    {
+      "id": "construction-sites",
+      "valueId": "customer-centric",
+      "title": "Boots on Construction Sites",
+      "company": "Scelta Inc",
+      "role": "Software Integration Consultant",
+      "timeframe": "2022-2023",
+      "situation": "Construction companies were struggling with digital transformation from paper-based systems. Remote implementation wasn't working effectively",
+      "action": "Literally showed up on construction sites wearing boots, trained workers hands-on, and experienced their actual workflow challenges firsthand",
+      "impact": "Achieved company-wide adoption (3-4 people to 50+ people per company) because solutions were designed around real user experience, not assumptions",
+      "learnings": ["Customer empathy", "Real-world testing", "User experience focus"],
+      "tags": ["customer-centric", "hands-on", "user experience"]
+    },
+    {
+      "id": "cibc-ai-mastery",
+      "valueId": "master",
+      "title": "CIBC AI Maturity Transformation",
+      "company": "CIBC",
+      "role": "Innovation Strategy Consultant",
+      "timeframe": "2023-Present",
+      "situation": "CIBC ranked #41 out of 50 banks globally in AI maturity while Canadian peers were in top 20 - a significant competitive disadvantage",
+      "action": "Mastered the AI maturity framework by analyzing thousands of data points, became the leading expert, and crafted a comprehensive 21-initiative strategy",
+      "impact": "Moved CIBC from #41 to top 20 globally. Strategy featured in CEO annual report and quarterly earnings calls - achieved 'jaw-dropping wow' vs mediocrity",
+      "learnings": ["Subject matter expertise", "Strategic excellence", "Executive impact"],
+      "tags": ["mastery", "AI strategy", "excellence"]
+    },
+    {
+      "id": "process-optimization",
+      "valueId": "make-impact",
+      "title": "Template-Based Impact at Scelta",
+      "company": "Scelta Inc",
+      "role": "Software Integration Consultant",
+      "timeframe": "2022-2023",
+      "situation": "Team was spending weeks on custom development for each client, limiting scalability and impact potential",
+      "action": "Focused on creating maximum leverage by developing replicable templates using Google AppSheet, concentrating effort where it would have biggest multiplier effect",
+      "impact": "Scaled from 5 to 20 customers (300% growth) with same team size. Reduced implementation from weeks to days, demonstrating focused impact",
+      "learnings": ["Process leverage", "Impact focus", "Scalable solutions"],
+      "tags": ["impact", "scaling", "efficiency"]
+    },
+    {
+      "id": "hyrox-training",
+      "valueId": "persevere",
+      "title": "HYROX Training - World's Most Difficult Race",
+      "company": "Personal Athletic Development",
+      "role": "Athlete in Training",
+      "timeframe": "2024-Present",
+      "situation": "Decided to tackle one of the world's most challenging fitness competitions despite demanding work schedule and no guarantee of success",
+      "action": "Show up daily for training despite ups and downs, injuries, fatigue, and competing priorities. Apply athletic perseverance learned from football championships",
+      "impact": "Building mental and physical resilience that translates to professional challenges. Demonstrating same perseverance that led to 2x national football championships",
+      "learnings": ["Daily consistency", "Mental resilience", "Long-term commitment"],
+      "tags": ["perseverance", "athletics", "consistency"]
+    },
+    {
+      "id": "design-competition",
+      "valueId": "personal-ownership",
+      "title": "Ivey Design Innovation Studio Victory",
+      "company": "Ivey Business School",
+      "role": "Graduate Student",
+      "timeframe": "2022",
+      "situation": "Design competition with CIBC as partner organization - high-stakes presentation with potential career implications",
+      "action": "Took full ownership of outcome, prepared extensively, and delivered strategic analysis that impressed the Director of CIBC Innovation enough to offer direct recruitment",
+      "impact": "Won competition and secured job offer, demonstrating how personal accountability and full buy-in leads to exponential outcomes",
+      "learnings": ["Personal accountability", "Preparation excellence", "Full commitment"],
+      "tags": ["ownership", "accountability", "results"]
+    },
+    {
+      "id": "google-appsheet-discovery",
+      "valueId": "resourceful",
+      "title": "Discovering Google AppSheet Solution",
+      "company": "Scelta Inc",
+      "role": "Software Integration Consultant",
+      "timeframe": "2022-2023",
+      "situation": "Team building custom JavaScript/HTML apps for each customer, taking weeks of development time and limiting scalability",
+      "action": "Constantly tried thousands of different approaches and tools, discovered Google AppSheet as simpler, managed, templateable solution instead of reinventing the wheel",
+      "impact": "Built equivalent functionality that scaled to 15+ customers quickly. Recognized as 'most resourceful person' for finding high-leverage tools vs custom development",
+      "learnings": ["Tool discovery", "Leverage thinking", "Problem-focused solutions"],
+      "tags": ["resourceful", "innovation", "efficiency"]
+    }
+  ],
   "keyStories": [
     {
       "title": "Transforming CIBC's AI Maturity Ranking",

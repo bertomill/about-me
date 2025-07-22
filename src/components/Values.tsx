@@ -1,15 +1,20 @@
 'use client';
 
-import { useState } from 'react';
-import { Heart, Target, Users, Lightbulb, TrendingUp, Award, ChevronRight, Star, CheckCircle, Briefcase, Calendar } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Heart, Target, Users, Lightbulb, TrendingUp, Award, ChevronRight, Star, CheckCircle, Briefcase, Calendar, Shield, Wrench } from 'lucide-react';
 
-// Types for values data structure - similar to other components
+// Import your real candidate data
+import candidateData from '@/data/candidate-info.json';
+
+// Types based on your actual data structure
 interface CoreValue {
   id: string;
   title: string;
+  shortDescription: string;
   description: string;
   icon: string;
   color: string;
+  principles: string[];
 }
 
 interface ValueExperience {
@@ -23,71 +28,15 @@ interface ValueExperience {
   action: string;
   impact: string;
   learnings: string[];
+  tags: string[];
 }
 
 export default function Values() {
-  const [activeValue, setActiveValue] = useState<string | null>(null);
   const [selectedValue, setSelectedValue] = useState<string>('all');
 
-  // Placeholder data - this will be replaced with real data later
-  const coreValues: CoreValue[] = [
-    {
-      id: 'innovation',
-      title: 'Innovation & Growth',
-      description: 'Driving meaningful change through creative problem-solving and continuous learning',
-      icon: 'lightbulb',
-      color: 'from-blue-500 to-indigo-600'
-    },
-    {
-      id: 'collaboration',
-      title: 'Collaboration',
-      description: 'Building strong relationships and achieving success through teamwork',
-      icon: 'users',
-      color: 'from-emerald-500 to-green-600'
-    },
-    {
-      id: 'excellence',
-      title: 'Excellence',
-      description: 'Commitment to high-quality outcomes and continuous improvement',
-      icon: 'target',
-      color: 'from-purple-500 to-pink-600'
-    },
-    {
-      id: 'impact',
-      title: 'Meaningful Impact',
-      description: 'Creating value that makes a difference for people and organizations',
-      icon: 'trending-up',
-      color: 'from-orange-500 to-red-600'
-    }
-  ];
-
-  // Placeholder experiences - this will be populated with real data later
-  const valueExperiences: ValueExperience[] = [
-    {
-      id: 'exp1',
-      valueId: 'innovation',
-      title: 'Digital Transformation Initiative',
-      company: 'CIBC',
-      role: 'Innovation Strategy Consultant',
-      timeframe: '2023-Present',
-      situation: 'Led initiative to modernize legacy banking processes',
-      action: 'Implemented AI-driven solutions and streamlined workflows',
-      impact: 'Improved efficiency by 40% and enhanced customer experience',
-      learnings: ['Change management', 'Stakeholder alignment', 'Technology adoption']
-    },
-    {
-      id: 'exp2',
-      valueId: 'collaboration',
-      title: 'Cross-Functional Team Leadership',
-      company: 'Previous Role',
-      role: 'Team Lead',
-      timeframe: '2022-2023',
-      situation: 'Managed diverse team across multiple departments',
-      action: 'Established clear communication protocols and shared goals',
-      impact: 'Delivered project 2 weeks ahead of schedule',
-      learnings: ['Team dynamics', 'Communication', 'Project management']
-    }
-  ];
+  // Get real data from candidate info
+  const coreValues: CoreValue[] = candidateData.values || [];
+  const valueExperiences: ValueExperience[] = candidateData.valueExperiences || [];
 
   const getIconComponent = (iconName: string) => {
     const iconMap = {
@@ -96,7 +45,11 @@ export default function Values() {
       'target': Target,
       'trending-up': TrendingUp,
       'heart': Heart,
-      'award': Award
+      'award': Award,
+      'star': Star,
+      'check-circle': CheckCircle,
+      'shield': Shield,
+      'wrench': Wrench
     };
     return iconMap[iconName as keyof typeof iconMap] || Star;
   };
@@ -123,11 +76,11 @@ export default function Values() {
           </div>
           <div>
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 flex items-center space-x-2">
-              <span>Core Values & Experiences</span>
+              <span>Core Values: CHAMPR Framework</span>
               <span className="text-purple-600 text-lg">💎</span>
             </h2>
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-              The fundamental principles that drive Robert's decisions and the real career experiences that demonstrate these values in action.
+              The 8 fundamental principles that guide Robert's decisions and drive his approach to work, relationships, and personal growth - each backed by real career experiences.
             </p>
           </div>
         </div>
@@ -156,6 +109,7 @@ export default function Values() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">{value.title}</h3>
+                  <p className="text-xs text-purple-600 font-medium mb-1">{value.shortDescription}</p>
                   <p className="text-sm text-gray-600 leading-relaxed">{value.description}</p>
                 </div>
                 {selectedValue === value.id && (
@@ -274,6 +228,21 @@ export default function Values() {
                       </div>
                     </div>
                   )}
+                  {experience.tags && experience.tags.length > 0 && (
+                    <div>
+                      <h5 className="text-sm font-medium text-gray-700 mb-2">Tags</h5>
+                      <div className="flex flex-wrap gap-2">
+                        {experience.tags.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md border border-gray-300"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -281,16 +250,16 @@ export default function Values() {
         )}
       </div>
 
-      {/* Coming Soon Notice */}
+      {/* Values Framework Summary */}
       <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border border-purple-200 p-6">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
             <Star size={20} className="text-purple-600" />
           </div>
           <div>
-            <h4 className="font-semibold text-purple-900 mb-1">Content Coming Soon</h4>
+            <h4 className="font-semibold text-purple-900 mb-1">CHAMPR Framework</h4>
             <p className="text-sm text-purple-700">
-              Robert's detailed core values and supporting career experiences will be added to provide deep insights into his principles and decision-making approach.
+              Robert's core values form the CHAMPR framework: <span className="font-medium">Collaborate, Challenge, Customer-Centric, Master, Make Impact, Persevere, Personal Ownership, Resourceful</span> - each value demonstrated through real career achievements and ongoing personal development.
             </p>
           </div>
         </div>
